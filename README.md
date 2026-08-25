@@ -20,10 +20,10 @@ SiyaPhambili starts as a public, searchable registry of South African hackathon 
 
 ## Team — Fantastic_Four
 
-- Mpilo Mankazana
-- Lerato
-- Musa
-- Tlhompho
+- ***
+- ***
+- ***
+- ***
 
 ## Status
 
