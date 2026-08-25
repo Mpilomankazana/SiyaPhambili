@@ -1,23 +1,39 @@
 {
-  "name": "uxpin-code-export",
+  "name": "siyaphambili-prototype",
   "version": "1.0.0",
+  "homepage": ".",
   "dependencies": {
-    "react":"18.3.1",
-    "react-dom":"18.3.1",
-    "@types/react":"18.3.1",
-    "@uxpin/expressions":"0.0.3",
-    "@mui/material":"5.16.6",
-    "@emotion/react":"^11.10.0",
-    "@emotion/styled":"^11.10.0",
-    "mui-image":"latest"
+    "@emotion/react": "^11.10.0",
+    "@emotion/styled": "^11.10.0",
+    "@mui/material": "5.16.6",
+    "@types/react": "18.3.1",
+    "@uxpin/expressions": "0.0.3",
+    "mui-image": "latest",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "devDependencies": {
+    "gh-pages": "^6.3.0",
     "react-scripts": "latest"
-   }
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }
