@@ -1,0 +1,54 @@
+# =========================================
+# SiyaPhambili Monorepo .gitignore
+# =========================================
+
+# ---------------------------------------
+# Environment Variables & Secrets
+# ---------------------------------------
+.env
+.env.*
+!.env.example
+
+# ---------------------------------------
+# Python / FastAPI (Backend)
+# ---------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+env/
+alembic.ini
+
+# ---------------------------------------
+# Node.js / React (Frontend)
+# ---------------------------------------
+node_modules/
+dist/
+build/
+.npm/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ---------------------------------------
+# System & IDEs
+# ---------------------------------------
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ---------------------------------------
+# Databases & Logs
+# ---------------------------------------
+*.sqlite3
+*.log

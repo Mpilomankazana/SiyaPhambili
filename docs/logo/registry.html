@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SiyaPhambili - Civic Seal Prototypes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f2f5; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            gap: 60px;
+            flex-wrap: wrap;
+        }
+        
+        .card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .seal-container {
+            position: relative;
+            width: 240px;
+            height: 240px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+        }
+
+        /* The 3D Image */
+        .seal-img {
+            width: 110px;
+            height: 110px;
+            z-index: 10;
+            object-fit: contain;
+        }
+
+        /* SVG for Circular Text */
+        svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* A subtle rotation to make it feel like an active digital crest */
+            animation: spin 30s linear infinite; 
+        }
+
+        @keyframes spin { 
+            100% { transform: rotate(360deg); } 
+        }
+
+        /* Style 1: Gold Standard Rim */
+        .gold-rim {
+            background-color: #ffffff;
+            border: 8px solid #ffb300;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        .gold-rim text {
+            fill: #1a1a1a;
+            font-size: 21px;
+            letter-spacing: 2px;
+        }
+
+        /* Style 2: Departmental Badge */
+        .dept-badge {
+            background-color: #283593;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+        }
+        .dept-badge text {
+            fill: #ffffff;
+            font-size: 21px;
+            letter-spacing: 2px;
+        }
+
+        /* Style 3: Open Civic Crest */
+        .open-crest {
+            background: transparent;
+        }
+        .open-crest .seal-img {
+            width: 130px; /* Slightly larger since there's no hard border */
+            height: 130px;
+        }
+        .open-crest text {
+            fill: #1a1a1a;
+            font-size: 24px;
+            letter-spacing: 3px;
+        }
+
+        .label {
+            font-size: 14px;
+            color: #4a5568;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Layout 1 -->
+    <div class="card">
+        <div class="seal-container gold-rim">
+            <img src="logo-transparent.png" alt="SiyaPhambili logo-transparent" class="seal-img">
+            <svg viewBox="0 0 200 200">
+                <path id="circle1" d="M 100, 100 m -72, 0 a 72,72 0 1,1 144,0 a 72,72 0 1,1 -144,0" fill="transparent" />
+                <text><textPath href="#circle1" startOffset="50%" text-anchor="middle">SIYAPHAMBILI • WE MOVE FORWARD •</textPath></text>
+            </svg>
+        </div>
+        <div class="label">Siya Phambili - We Move Forward</div>
+    </div>
+
+
+</body>
+</html>

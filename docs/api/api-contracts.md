@@ -1,6 +1,6 @@
 # SiyaPhambili — API & Component Contracts
 
-This document defines the strict REST API contracts between the React frontend and the FastAPI backend. All JSON payloads must match these structures exactly to ensure seamless integration.
+This document defines the strict REST API contracts between the React frontend and the FastAPI backend microservices. All requests are routed through the Nginx API Gateway.
 
 ## Base URL
 All API requests in the local development environment will be routed to:
@@ -8,12 +8,75 @@ All API requests in the local development environment will be routed to:
 
 ---
 
-## 1. Project Registry Endpoints
+## 1. Authentication Service Endpoints
 
-### 1.1. Retrieve All Projects (The Registry)
+### 1.1. User Registration
+*   **Endpoint:** `POST /auth/register`
+*   **Purpose:** Creates a new user account.
+*   **Request Payload:**
+    ```json
+    {
+      "email": "innovator@example.com",
+      "password": "securepassword123"
+    }
+    ```
+*   **Response Payload (201 Created):**
+    ```json
+    {
+      "status": "success",
+      "data": {
+        "id": "uuid",
+        "email": "innovator@example.com",
+        "role": "innovator"
+      }
+    }
+    ```
+
+### 1.2. User Login
+*   **Endpoint:** `POST /auth/login`
+*   **Purpose:** Authenticates a user and issues a JWT.
+*   **Request Payload:**
+    ```json
+    {
+      "email": "innovator@example.com",
+      "password": "securepassword123"
+    }
+    ```
+*   **Response Payload (200 OK):**
+    ```json
+    {
+      "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+      "token_type": "bearer",
+      "role": "innovator"
+    }
+    ```
+
+### 1.3. Update User Role (Admin Only)
+*   **Endpoint:** `PUT /auth/users/{id}/role`
+*   **Purpose:** Allows a super_admin to elevate users to officials.
+*   **Headers:** `Authorization: Bearer <super_admin_jwt>`
+*   **Request Payload:**
+    ```json
+    {
+      "role": "official"
+    }
+    ```
+*   **Response Payload (200 OK):**
+    ```json
+    {
+      "status": "success",
+      "message": "User role updated successfully."
+    }
+    ```
+
+---
+
+## 2. Core Registry & Stage-Gate Endpoints
+
+### 2.1. Retrieve All Projects (The Registry)
 *   **Endpoint:** `GET /projects`
 *   **Purpose:** Fetches a list of all hackathon solutions.
-*   **Query Parameters:** `?sector={sector}&stage={stage}` (Optional filtering)
+*   **Query Parameters:** `?sector_id={id}&stage={stage}` (Optional filtering)
 *   **Response Payload (200 OK):**
     ```json
     {
@@ -21,9 +84,8 @@ All API requests in the local development environment will be routed to:
       "data": [
         {
           "id": "uuid",
-          "name": "SiyaPhambili",
-          "team_name": "Fantastic_four",
-          "sector": "Gov Innovation",
+          "title": "SiyaPhambili",
+          "sector_id": 1,
           "current_stage": "Prototype",
           "created_at": "2026-09-25T16:00:00Z"
         }
@@ -31,16 +93,16 @@ All API requests in the local development environment will be routed to:
     }
     ```
 
-### 1.2. Register a New Solution
+### 2.2. Register a New Solution
 *   **Endpoint:** `POST /projects`
 *   **Purpose:** Submits a new hackathon project to the registry.
+*   **Headers:** `Authorization: Bearer <innovator_jwt>`
 *   **Request Payload:**
     ```json
     {
-      "name": "SiyaPhambili",
-      "team_name": "Fantastic_four",
-      "description": "Civic Innovation Bridge Platform",
-      "sector": "Gov Innovation"
+      "title": "SiyaPhambili",
+      "sector_id": 1,
+      "problem_statement": "Siloed civic innovation projects lack visibility."
     }
     ```
 *   **Response Payload (201 Created):**
@@ -53,19 +115,15 @@ All API requests in the local development environment will be routed to:
     ```
 *   **Error Codes:** `422 Unprocessable Entity` (Missing required fields).
 
----
-
-## 2. Stage-Gate Pipeline Endpoints
-
-### 2.1. Advance Project Stage
+### 2.3. Advance Project Stage
 *   **Endpoint:** `PUT /projects/{id}/stage`
-*   **Purpose:** Updates the technology readiness/implementation stage of a solution (Idea → Prototype → Pilot → Scale → Implemented).
+*   **Purpose:** Updates the technology readiness/implementation stage of a solution.
+*   **Headers:** `Authorization: Bearer <official_jwt>`
 *   **Request Payload:**
     ```json
     {
       "new_stage": "Pilot",
-      "approved_by": "Government Official ID",
-      "notes": "Prototype validated at BCX HQs."
+      "verification_notes": "Prototype validated at BCX HQs."
     }
     ```
 *   **Response Payload (200 OK):**
@@ -76,4 +134,4 @@ All API requests in the local development environment will be routed to:
       "updated_at": "2026-09-26T10:00:00Z"
     }
     ```
-*   **Error Codes:** `400 Bad Request` (Invalid stage transition), `404 Not Found` (Project ID does not exist).
+*   **Error Codes:** `401 Unauthorized` (Missing token), `403 Forbidden` (User is not an official), `400 Bad Request` (Invalid stage transition).

@@ -1,40 +1,60 @@
-# SiyaPhambili — Repository Architecture
+# SiyaPhambili — Architecture
 
-This document outlines the directory structure and file organization for the SiyaPhambili monorepo. It serves as a visual guide for all team members to understand where code, configurations, and documentation reside.
+This document outlines the strict directory structure and file organization for the SiyaPhambili microservices repository. It serves as the single source of truth for the development team during the hackathon.
 
 ## Directory Tree
 
 ```text
 siyaphambili/
 ├── docs/                        # Project documentation
-│   ├── adr/                     # Architecture Decision Records (ADRs)
-│   ├── api/                     # API contracts and specifications
+│   ├── adr/                     # Architecture Decision Records
+│   ├── api/api-contracts.md     # REST API payloads and endpoints
 │   └── architecture/            # System architecture diagrams
-├── frontend/                    # React Single Page Application (UI)
-│   ├── public/                  # Static assets (images, icons)
-│   ├── src/                     # React components, contexts, and API clients
-│   ├── cypress/                 # Acceptance testing suites
-│   ├── package.json             # Node.js dependencies and frontend scripts
-│   └── Dockerfile               # Container configuration for the frontend
-├── backend/                     # FastAPI Application (API)
-│   ├── app/                     # Core backend logic
-│   │   ├── routers/             # API endpoint definitions
-│   │   ├── services/            # Business logic and stage-gate rules
-│   │   ├── models/              # SQLAlchemy database models
-│   │   └── main.py              # FastAPI application entry point
-│   ├── tests/                   # Pytest integration testing suites
-│   ├── alembic/                 # Database migration scripts
-│   ├── requirements.txt         # Python dependencies
-│   └── Dockerfile               # Container configuration for the backend
-├── .github/                     # GitHub Actions CI/CD workflows
-├── docker-compose.yml           # Local infrastructure orchestration (PostgreSQL + Backend + Frontend)
-├── Makefile                     # Centralized task automation commands
-├── ARCHITECTURE.md              # This file
-└── README.md                    # Main project overview and setup instructions
+├── gateway/                     # Nginx API Gateway (Reverse Proxy)
+│   ├── nginx.conf               # Routing definitions and CORS
+│   └── Dockerfile               # Container configuration for Gateway
+├── frontend/                    # React Single Page Application
+│   ├── public/                  # Public static assets
+│   ├── src/                     # Source code for React
+│   │   ├── assets/              # Images and global stylesheets
+│   │   ├── components/          # Reusable UI elements
+│   │   ├── contexts/            # Global state management (JWT Auth)
+│   │   ├── pages/               # Main route views
+│   │   ├── services/            # Axios/Fetch API client functions
+│   │   ├── App.jsx              # Main React router configuration
+│   │   └── main.jsx             # React DOM entry point
+│   ├── package.json             # Node.js dependencies
+│   ├── vite.config.js           # Vite bundler configuration
+│   └── Dockerfile               # Container configuration for Frontend
+├── services/                    # Backend Microservices
+│   ├── auth/                    # Authentication Service
+│   │   ├── app/                 # Auth application code
+│   │   │   ├── core/            # Password hashing and JWT logic
+│   │   │   ├── routers/         # Login and registration endpoints
+│   │   │   ├── database.py      # PostgreSQL connection setup
+│   │   │   ├── models.py        # SQLAlchemy Users table schema
+│   │   │   ├── schemas.py       # Pydantic data validation models
+│   │   │   └── main.py          # FastAPI application instance
+│   │   ├── tests/               # Pytest unit tests for Auth
+│   │   ├── requirements.txt     # Python dependencies for Auth
+│   │   └── Dockerfile           # Container configuration for Auth
+│   └── core/                    # Core Registry Service
+│       ├── app/                 # Core application code
+│       │   ├── routers/         # Projects and stages endpoints
+│       │   ├── database.py      # PostgreSQL connection setup
+│       │   ├── models.py        # SQLAlchemy Projects tables
+│       │   ├── schemas.py       # Pydantic data validation models
+│       │   └── main.py          # FastAPI application instance
+│       ├── tests/               # Pytest unit tests for Core
+│       ├── alembic/             # Database migration configurations
+│       ├── requirements.txt     # Python dependencies for Core
+│       └── Dockerfile           # Container configuration for Core
+├── .github/                     # GitHub configurations
+│   └── workflows/               # CI/CD automation pipelines
+│       └── ci.yml               # Linting and testing workflow
+├── docker-compose.yml           # Multi-container orchestration
+├── Makefile                     # Task automation commands
+├── ROADMAP.md                   # Project execution tracker
+├── ARCHITECTURE.md              # This repository architecture file
+└── README.md                    # Main setup instructions
 ```
-
-## Core Boundaries
-
-*   **Root Level:** Reserved strictly for repository-wide configuration (Docker, Make, Git, CI/CD).
-*   **`frontend/`:** Dedicated to the React application. Interacts with the backend exclusively via HTTP requests defined in `docs/api/`.
-*   **`backend/`:** Dedicated to the FastAPI service and PostgreSQL database interactions.
