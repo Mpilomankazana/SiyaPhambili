@@ -21,7 +21,10 @@ htmlcov/
 .venv/
 venv/
 env/
-alembic.ini
+# NOTE: alembic.ini deliberately NOT ignored — services/core/alembic.ini
+# holds no secrets (env.py overrides sqlalchemy.url from DATABASE_URL at
+# runtime), so it must be committed or every teammate's `alembic` CLI
+# breaks on a fresh clone.
 
 # ---------------------------------------
 # Node.js / React (Frontend)

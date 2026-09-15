@@ -1,0 +1,74 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  lint-and-test-auth:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: services/auth
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt flake8 black
+      - run: flake8 . || true   # relax to `flake8 .` (no `|| true`) once code lands
+      - run: black --check . || true
+      - run: pytest || true     # relax once real tests exist (ROADMAP.md Phase 3)
+
+  lint-and-test-core:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: services/core
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt flake8 black
+      - run: flake8 . || true
+      - run: black --check . || true
+      - run: pytest || true
+
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: npm install
+      - run: npm run build
+      - run: npm audit --audit-level=high || true   # relax `|| true` once dependencies are finalized
+
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # Static security analysis of our own Python code (not dependencies)
+      - run: pip install bandit
+      - run: bandit -r services/auth/app services/core/app || true
+
+      # Known-vulnerability scan of pinned dependencies
+      - run: pip install pip-audit
+      - run: pip-audit -r services/auth/requirements.txt || true
+      - run: pip-audit -r services/core/requirements.txt || true
+
+      # Catch committed secrets (API keys, JWT secrets, DB passwords) before they hit main
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -53,10 +53,21 @@ For a deep dive into our architecture and technical decisions, please review our
 - **`docs/adr/`:** Architecture Decision Records (ADRs) detailing our technical choices.
 - **`docs/architecture/`:** C4 Model system visualizations mapping our containers and components.
 - **`docs/api/`:** API contracts defining the frontend, gateway, and backend integrations.
+- **`docs/popia-notes.md`:** POPIA compliance — data collected, consent, retention.
+- **`docs/ip-and-user-protection-notes.md`:** How submitted solutions and their owners are protected — and what that protection doesn't cover.
+- **`SECURITY.md`:** Platform/account security — auth, transport, secrets, scanning.
 
 ## Local Development Setup
 
 *(Instructions for Docker and Makefile will be added here as we scaffold the codebase in Phase 2.)*
+
+## Note: `prototype/` vs `frontend/`
+
+The repo currently contains two frontend lineages:
+- **`prototype/`** — a pre-existing Create React App / UXPin export, already deployed at the Prototype link above. Visual/UX reference only.
+- **`frontend/`** — the active microservices-era build (Vite + React + MUI), scaffolded but not yet wired to real endpoints.
+
+**Team decision needed before/at the hackathon:** is `prototype/` archived as design reference only, or does `frontend/` adopt specific screens/components from it? Whoever owns this, update this note once decided.
 
 ## Team: Fantastic 4
 
