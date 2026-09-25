@@ -1,1 +1,0 @@
-# TODO: Core Registry Service
