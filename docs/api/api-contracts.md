@@ -46,9 +46,9 @@ All API requests in the local development environment will be routed to:
 *   **Response Payload (200 OK):**
     ```json
     {
-      "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-      "token_type": "bearer",
-      "role": "innovator"
+      "status": "success",
+      "access_token": "<jwt_access_token>",
+      "token_type": "bearer"
     }
     ```
 
