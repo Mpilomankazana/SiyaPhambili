@@ -5,7 +5,9 @@
 
 ---
 
-# 1. Roadmap Status Legend
+# Milestone 1: Project Strategy & Architecture
+
+## 1. Roadmap Status Legend
 
 Use the following status indicators throughout this document:
 
@@ -24,7 +26,7 @@ Use the following status indicators throughout this document:
 
 ---
 
-# 2. Hackathon Objective
+## 2. Hackathon Objective
 
 The objective of the hackathon is **not** to complete the entire long-term SiyaPhambili platform.
 
@@ -104,7 +106,7 @@ The MVP is considered functionally complete when:
 
 ---
 
-# 3. Hackathon Scope Freeze
+## 3. Hackathon Scope Freeze
 
 During the MVP phase:
 
@@ -124,9 +126,9 @@ During the MVP phase:
 
 ---
 
-# 4. MVP Architecture
+## 4. MVP Architecture
 
-## 4.1 Target Architecture
+### Target Architecture
 
 ```text
                     ┌──────────────────────┐
@@ -153,7 +155,7 @@ During the MVP phase:
                        └───────────────┘
 ```
 
-## 4.2 Architecture Tasks
+### Architecture Tasks
 
 * [ ] 🔴 Verify Docker Compose starts all required services.
 * [ ] 🔴 Verify Auth Service starts.
@@ -188,7 +190,9 @@ Do not add more services during the hackathon.
 
 ---
 
-# 5. Database MVP
+# Milestone 2: Database & Backend MVP
+
+## 5. Database MVP
 
 The MVP requires only five core entities.
 
@@ -206,7 +210,7 @@ Projects      Contact Requests
 Sectors
 ```
 
-## 5.1 Users
+### 5.1 Users
 
 Required fields:
 
@@ -230,7 +234,7 @@ Tasks:
 
 ---
 
-## 5.2 Sectors
+### 5.2 Sectors
 
 Required fields:
 
@@ -259,7 +263,7 @@ Community Development
 
 ---
 
-## 5.3 Projects
+### 5.3 Projects
 
 Required fields:
 
@@ -291,7 +295,7 @@ Tasks:
 
 ---
 
-## 5.4 Stage Gate History
+### 5.4 Stage Gate History
 
 Required fields:
 
@@ -314,7 +318,7 @@ Tasks:
 
 ---
 
-## 5.5 Contact Requests
+### 5.5 Contact Requests
 
 Required fields:
 
@@ -336,7 +340,7 @@ Tasks:
 
 ---
 
-# 6. Database & Migration Infrastructure
+## 6. Database & Migration Infrastructure
 
 * [ ] 🔴 Connect SQLAlchemy metadata to Alembic.
 * [ ] 🔴 Generate initial migration.
@@ -360,9 +364,9 @@ and initialize the database without manually creating tables.
 
 ---
 
-# 7. Authentication MVP
+## 7. Authentication MVP
 
-## 7.1 Registration
+### 7.1 Registration
 
 Endpoint:
 
@@ -382,7 +386,7 @@ Tasks:
 
 ---
 
-## 7.2 Login
+### 7.2 Login
 
 Endpoint:
 
@@ -402,7 +406,7 @@ Tasks:
 
 ---
 
-## 7.3 Authenticated User
+### 7.3 Authenticated User
 
 Endpoint:
 
@@ -422,7 +426,7 @@ Tasks:
 
 ---
 
-# 8. Authorization & Roles
+## 8. Authorization & Roles
 
 MVP roles:
 
@@ -432,26 +436,26 @@ official
 admin
 ```
 
-## Innovator
+### Innovator
 
 * [ ] 🔴 Register/login.
 * [ ] 🔴 Create projects.
 * [ ] 🔴 View own projects.
 * [ ] 🟠 Update own projects.
 
-## Official
+### Official
 
 * [ ] 🔴 Login.
 * [ ] 🔴 View projects.
 * [ ] 🔴 Review projects.
 * [ ] 🔴 Advance project stage.
 
-## Admin
+### Admin
 
 * [ ] 🟠 Login.
 * [ ] 🟠 Full administrative access.
 
-## Public
+### Public
 
 * [ ] 🔴 View public projects.
 * [ ] 🔴 View project details.
@@ -465,9 +469,9 @@ The frontend must never be treated as the authority for permissions.
 
 ---
 
-# 9. Core Project API
+## 9. Core Project API
 
-## Project Creation
+### Project Creation
 
 ```text
 POST /api/v1/projects
@@ -484,7 +488,7 @@ Tasks:
 
 ---
 
-## Project Registry
+### Project Registry
 
 ```text
 GET /api/v1/projects
@@ -500,7 +504,7 @@ Tasks:
 
 ---
 
-## Project Details
+### Project Details
 
 ```text
 GET /api/v1/projects/{id}
@@ -515,7 +519,7 @@ Tasks:
 
 ---
 
-## Project Update
+### Project Update
 
 ```text
 PUT /api/v1/projects/{id}
@@ -529,7 +533,7 @@ Tasks:
 
 ---
 
-# 10. Stage-Gate MVP
+## 10. Stage-Gate MVP
 
 The stage machine is:
 
@@ -592,7 +596,7 @@ Return result
 
 ---
 
-# 11. Contact Request MVP
+## 11. Contact Request MVP
 
 The contact system should protect the innovator's direct contact information.
 
@@ -624,11 +628,13 @@ For the hackathon, storing the request is sufficient.
 
 ---
 
-# 12. Frontend MVP
+# Milestone 3: Frontend MVP
+
+## 12. Frontend Routes
 
 The active frontend should become the actual application.
 
-## Required Routes
+### Required Routes
 
 ```text
 /
@@ -655,7 +661,7 @@ Tasks:
 
 ---
 
-# 13. Public Registry
+## 13. Public Registry
 
 The registry is one of the primary product screens.
 
@@ -690,7 +696,7 @@ PostgreSQL
 
 ---
 
-# 14. Project Details
+## 14. Project Details
 
 Tasks:
 
@@ -719,7 +725,7 @@ Implemented
 
 ---
 
-# 15. Innovator Dashboard
+## 15. Innovator Dashboard
 
 Tasks:
 
@@ -732,7 +738,7 @@ Tasks:
 
 ---
 
-# 16. Project Submission
+## 16. Project Submission
 
 Required form:
 
@@ -756,7 +762,7 @@ Tasks:
 
 ---
 
-# 17. Official/Admin Review
+## 17. Official/Admin Review
 
 The admin/official experience only needs to support the MVP stage-gate workflow.
 
@@ -775,7 +781,7 @@ Do not build a large administrative dashboard during the MVP.
 
 ---
 
-# 18. Reuse Existing Prototype
+## 18. Reuse Existing Prototype
 
 The existing:
 
@@ -802,7 +808,9 @@ frontend/
 
 ---
 
-# 19. Seed / Demo Data
+# Milestone 4: Infrastructure, Testing & Demo
+
+## 19. Seed / Demo Data
 
 The application must not appear empty during the demonstration.
 
@@ -829,13 +837,13 @@ This allows the stage-gate system to be demonstrated immediately.
 
 ---
 
-# 20. Testing — MVP Critical Path
+## 20. Testing — MVP Critical Path
 
 We are not attempting complete test coverage during the hackathon.
 
 We are testing the paths that can break the demo.
 
-## Authentication
+### Authentication
 
 * [ ] 🔴 Registration succeeds.
 * [ ] 🔴 Duplicate email rejected.
@@ -844,21 +852,21 @@ We are testing the paths that can break the demo.
 * [ ] 🔴 Invalid JWT rejected.
 * [ ] 🔴 Expired JWT rejected.
 
-## Projects
+### Projects
 
 * [ ] 🔴 Authenticated user can create project.
 * [ ] 🔴 Public user can list projects.
 * [ ] 🔴 Public user can view project.
 * [ ] 🔴 Unauthorized user cannot modify another user's project.
 
-## Stage Gates
+### Stage Gates
 
 * [ ] 🔴 Valid transition succeeds.
 * [ ] 🔴 Invalid transition rejected.
 * [ ] 🔴 Unauthorized transition rejected.
 * [ ] 🔴 Stage history is created.
 
-## Contact
+### Contact
 
 * [ ] 🔴 Contact request succeeds.
 * [ ] 🔴 Invalid project rejected.
@@ -866,7 +874,7 @@ We are testing the paths that can break the demo.
 
 ---
 
-# 21. Integration Testing
+## 21. Integration Testing
 
 The most important test is:
 
@@ -896,7 +904,7 @@ Tasks:
 
 ---
 
-# 22. Security MVP
+## 22. Security MVP
 
 Tasks:
 
@@ -915,7 +923,7 @@ Tasks:
 
 ---
 
-# 23. Docker / Local Environment
+## 23. Docker / Local Environment
 
 Tasks:
 
@@ -946,7 +954,7 @@ make migrate
 
 ---
 
-# 24. CI/CD
+## 24. CI/CD
 
 Only the critical CI checks should block the MVP.
 
@@ -969,7 +977,7 @@ However, after the MVP is stable, `|| true` should be removed from checks that a
 
 ---
 
-# 25. Deployment
+## 25. Deployment
 
 Deployment comes **after local end-to-end functionality**.
 
@@ -989,27 +997,27 @@ Do not redesign the deployment architecture during the final hours.
 
 ---
 
-# 26. Demo Preparation
+## 26. Demo Preparation
 
 The final demo should be scripted.
 
-## Demo Flow
+### Demo Flow
 
-### Step 1 — Public Registry
+#### Step 1 — Public Registry
 
 * [ ] 🔴 Open SiyaPhambili.
 * [ ] 🔴 Show populated registry.
 * [ ] 🔴 Search/filter projects.
 * [ ] 🔴 Open a project.
 
-### Step 2 — Innovator
+#### Step 2 — Innovator
 
 * [ ] 🔴 Register/login.
 * [ ] 🔴 Open dashboard.
 * [ ] 🔴 Submit project.
 * [ ] 🔴 Show project appearing in registry.
 
-### Step 3 — Official
+#### Step 3 — Official
 
 * [ ] 🔴 Login as official.
 * [ ] 🔴 Open project.
@@ -1017,12 +1025,12 @@ The final demo should be scripted.
 * [ ] 🔴 Move project from Idea → Prototype.
 * [ ] 🔴 Show stage history.
 
-### Step 4 — Contact
+#### Step 4 — Contact
 
 * [ ] 🔴 Submit contact request.
 * [ ] 🔴 Demonstrate that the request is associated with the project.
 
-### Step 5 — Architecture
+#### Step 5 — Architecture
 
 * [ ] 🟠 Show architecture diagram.
 * [ ] 🟠 Explain microservices.
@@ -1032,7 +1040,7 @@ The final demo should be scripted.
 
 ---
 
-# 27. Time Allocation
+## 27. Time Allocation
 
 Assuming approximately 40 hours remain:
 
@@ -1054,11 +1062,11 @@ The remaining time should act as contingency rather than as an invitation to add
 
 ---
 
-# 28. Emergency Cut List
+## 28. Emergency Cut List
 
 If the team falls behind, remove features in this order.
 
-## First to cut
+### First to cut
 
 * [>] Advanced analytics
 * [>] Pagination
@@ -1068,7 +1076,7 @@ If the team falls behind, remove features in this order.
 * [>] Complex contact workflow
 * [>] Advanced profile management
 
-## Do NOT cut
+### Do NOT cut
 
 * [ ] 🔴 Authentication
 * [ ] 🔴 Project creation
@@ -1084,11 +1092,13 @@ The principle is:
 
 ---
 
-# 29. Post-Hackathon Stabilization
+# Milestone 5: Post-Hackathon Roadmap
+
+## 29. Post-Hackathon Stabilization
 
 Once the MVP has been demonstrated, return to the broader roadmap.
 
-## Architecture
+### Architecture
 
 * [>] Evaluate database-per-service architecture.
 * [>] Refine C4 diagrams.
@@ -1096,7 +1106,7 @@ Once the MVP has been demonstrated, return to the broader roadmap.
 * [>] Improve service boundaries.
 * [>] Introduce stronger observability.
 
-## Backend
+### Backend
 
 * [>] Complete API implementation.
 * [>] Improve validation.
@@ -1106,7 +1116,7 @@ Once the MVP has been demonstrated, return to the broader roadmap.
 * [>] Add refresh tokens.
 * [>] Improve authorization model.
 
-## Frontend
+### Frontend
 
 * [>] Complete UI/UX.
 * [>] Accessibility.
@@ -1115,7 +1125,7 @@ Once the MVP has been demonstrated, return to the broader roadmap.
 * [>] Advanced dashboards.
 * [>] Profile management.
 
-## Testing
+### Testing
 
 * [>] Expand unit coverage.
 * [>] Integration test suite.
@@ -1123,7 +1133,7 @@ Once the MVP has been demonstrated, return to the broader roadmap.
 * [>] Security testing.
 * [>] Performance testing.
 
-## DevOps
+### DevOps
 
 * [>] Harden CI.
 * [>] Remove permissive `|| true` checks.
@@ -1134,7 +1144,7 @@ Once the MVP has been demonstrated, return to the broader roadmap.
 
 ---
 
-# 30. Production Hardening
+## 30. Production Hardening
 
 These are explicitly outside the hackathon MVP.
 
@@ -1154,7 +1164,7 @@ These are explicitly outside the hackathon MVP.
 
 ---
 
-# 31. Future Enhancements
+## 31. Future Enhancements
 
 The original product roadmap remains relevant after the MVP.
 
@@ -1178,7 +1188,7 @@ Potential future capabilities include:
 
 ---
 
-# 32. Release Strategy
+## 32. Release Strategy
 
 The hackathon MVP should receive a release tag.
 
@@ -1208,7 +1218,7 @@ v1.0.0
 
 ---
 
-# 33. Definition of Success
+## 33. Definition of Success
 
 The hackathon is successful if a judge can watch the following without us manually manipulating the database:
 
@@ -1250,9 +1260,9 @@ rather than mocked frontend data.
 
 ---
 
-# 34. Final Hackathon Rule
+## 34. Final Hackathon Rule
 
-> ## Build the smallest complete SiyaPhambili.
+> ### Build the smallest complete SiyaPhambili.
 >
 > Do not attempt to build the entire SiyaPhambili platform.
 
