@@ -650,12 +650,12 @@ The active frontend should become the actual application.
 
 Tasks:
 
-* [ ] 🔴 Configure React Router.
-* [ ] 🔴 Configure API client.
-* [ ] 🔴 Configure authentication context.
-* [ ] 🔴 Implement login.
-* [ ] 🔴 Implement registration.
-* [ ] 🔴 Store authentication state.
+* [x] 🔴 Configure React Router.
+* [x] 🔴 Configure API client.
+* [x] 🔴 Configure authentication context.
+* [~] 🔴 Implement login.
+* [~] 🔴 Implement registration.
+* [~] 🔴 Store authentication state.
 * [ ] 🔴 Implement logout.
 * [ ] 🔴 Implement protected routes.
 

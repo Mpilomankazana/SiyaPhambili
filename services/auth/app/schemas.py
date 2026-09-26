@@ -2,12 +2,11 @@ from typing import Literal
 
 from pydantic import BaseModel, EmailStr, field_validator
 
-
 class UserRegisterRequest(BaseModel):
+    name: str
     email: EmailStr
     password: str
-    name: str
-    consent_accepted: Literal[True]
+    role: str = "innovator"
 
     @field_validator("name")
     @classmethod
@@ -38,9 +37,8 @@ class UserLoginRequest(BaseModel):
 
 
 class TokenResponse(BaseModel):
-    status: str
     access_token: str
-    token_type: str = "bearer"
+    token_type: str
 
 
 class UserResponse(BaseModel):

@@ -16,15 +16,15 @@ siyaphambili/
 ├── frontend/                    # React Single Page Application
 │   ├── public/                  # Public static assets
 │   ├── src/                     # Source code for React
-│   │   ├── assets/              # Images and global stylesheets
+│   │   ├── api/                 # Axios API client functions (client.js)
 │   │   ├── components/          # Reusable UI elements
-│   │   ├── contexts/            # Global state management (JWT Auth)
-│   │   ├── pages/               # Main route views
-│   │   ├── services/            # Axios/Fetch API client functions
+│   │   ├── context/             # Global state management (AuthContext.jsx)
+│   │   ├── pages/               # Main route views (Login, Register, Dashboard, etc.)
 │   │   ├── App.jsx              # Main React router configuration
+│   │   ├── index.css            # Tailwind CSS v4 global theme configuration
 │   │   └── main.jsx             # React DOM entry point
 │   ├── package.json             # Node.js dependencies
-│   ├── vite.config.js           # Vite bundler configuration
+│   ├── vite.config.js           # Vite bundler configuration with Tailwind v4
 │   └── Dockerfile               # Container configuration for Frontend
 ├── services/                    # Backend Microservices
 │   ├── auth/                    # Authentication Service

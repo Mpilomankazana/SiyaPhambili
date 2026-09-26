@@ -17,7 +17,10 @@ SiyaPhambili starts as a public, searchable registry of South African hackathon 
 
 **Frontend**
 - React (Single Page Application)
-- Material-UI (Component Library)
+- Tailwind CSS v4 (Utility-first Component Styling)
+
+**Backend Microservices & Gateway**
+...
 
 **Backend Microservices & Gateway**
 - Nginx (API Gateway & Reverse Proxy)
