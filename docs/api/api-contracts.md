@@ -18,18 +18,17 @@ All API requests in the local development environment will be routed to:
     ```json
     {
       "email": "innovator@example.com",
-      "password": "securepassword123"
+      "password": "securepassword123",
+      "name": "Example Innovator",
+      "consent_accepted": true
     }
     ```
 *   **Response Payload (201 Created):**
     ```json
     {
       "status": "success",
-      "data": {
-        "id": "uuid",
-        "email": "innovator@example.com",
-        "role": "innovator"
-      }
+      "message": "Account created successfully.",
+      "user_id": "1"
     }
     ```
 
@@ -52,9 +51,14 @@ All API requests in the local development environment will be routed to:
     }
     ```
 
-### 1.3. Update User Role (Admin Only)
+### 1.3. Retrieve Authenticated User
+*   **Endpoint:** `GET /auth/me`
+*   **Headers:** `Authorization: Bearer <jwt_access_token>`
+*   **Purpose:** Returns the account associated with the verified token.
+
+### 1.4. Update User Role (Admin Only)
 *   **Endpoint:** `PUT /auth/users/{id}/role`
-*   **Purpose:** Allows a super_admin to elevate users to officials.
+*   **Purpose:** Allows a super_admin to elevate users to officials. The initial super_admin is created by the seed script; configure `DEMO_USER_PASSWORD` before running it.
 *   **Headers:** `Authorization: Bearer <super_admin_jwt>`
 *   **Request Payload:**
     ```json
@@ -73,6 +77,11 @@ All API requests in the local development environment will be routed to:
 ---
 
 ## 2. Core Registry & Stage-Gate Endpoints
+
+### 2.0. Retrieve Sectors
+*   **Endpoint:** `GET /projects/sectors`
+*   **Purpose:** Supplies the sector choices used when submitting and filtering projects.
+*   **Response Payload (200 OK):** `{ "status": "success", "data": [{ "id": 1, "name": "Education", "description": null }] }`
 
 ### 2.1. Retrieve All Projects (The Registry — Summary View)
 *   **Endpoint:** `GET /projects`
@@ -100,7 +109,7 @@ All API requests in the local development environment will be routed to:
 ### 2.2. Retrieve a Single Project (Detail View)
 *   **Endpoint:** `GET /projects/{id}`
 *   **Purpose:** Full detail for one solution.
-*   **Visibility rule:** an unauthenticated or `innovator`-role caller who is **not** the owner gets a `403` (or the summary fields only — pick one and keep it consistent; `403` is simpler to reason about). The project's own owner, or any `official`/`super_admin`, gets the full record:
+*   **Visibility rule:** an unauthenticated or non-owner `innovator` receives summary fields only for a public project. The project's own owner, or any `official`/`super_admin`, gets the full record. Restricted projects return `404` to everyone else.
 *   **Response Payload (200 OK):**
     ```json
     {

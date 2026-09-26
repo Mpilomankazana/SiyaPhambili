@@ -59,7 +59,22 @@ For a deep dive into our architecture and technical decisions, please review our
 
 ## Local Development Setup
 
-*(Instructions for Docker and Makefile will be added here as we scaffold the codebase in Phase 2.)*
+1. Copy `.env.example` to `.env` and replace the placeholder passwords and JWT secret.
+2. Start the services with `docker compose up --build -d`.
+3. Apply the service-owned database migrations:
+
+	```bash
+	docker compose exec auth-service alembic upgrade head
+	docker compose exec core-service alembic upgrade head
+	```
+
+4. Seed the initial super-admin and official accounts:
+
+	```bash
+	docker compose exec auth-service python app/seed.py
+	```
+
+The seed script requires `DEMO_USER_PASSWORD` to be set to at least 12 characters. Do not use the example values outside local development.
 
 ## Note: `prototype/` vs `frontend/`
 

@@ -5,27 +5,25 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from app.database import Base
+from app.database import Base, DATABASE_URL
 from app.models import User
 from app.core.security import hash_password
-
-DATABASE_URL = os.getenv(
-    "DATABASE_URL",
-    "postgresql://siyaphambili_admin:hackathon_secret_2026@siyaphambili_db:5432/siyaphambili_db"
-)
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-DEMO_PASSWORD = "password123"
+DEMO_PASSWORD = os.getenv("DEMO_USER_PASSWORD")
 
 DEMO_USERS = [
-    {"email": "admin@siyaphambili.org", "name": "Hackathon Judge", "role": "admin"},
+    {"email": "admin@siyaphambili.org", "name": "Hackathon Judge", "role": "super_admin"},
     {"email": "official@siyaphambili.org", "name": "Demo Official", "role": "official"},
 ]
 
 
 def seed_data():
+    if not DEMO_PASSWORD or len(DEMO_PASSWORD) < 12:
+        raise RuntimeError("Set DEMO_USER_PASSWORD to a value of at least 12 characters before seeding.")
+
     db = SessionLocal()
     try:
         for u in DEMO_USERS:

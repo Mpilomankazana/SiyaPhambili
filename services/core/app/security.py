@@ -40,3 +40,14 @@ def require_role(*allowed_roles: str):
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Insufficient permissions")
         return current_user
     return role_checker
+
+
+def get_subject_id(current_user: dict) -> str:
+    subject = current_user.get("sub")
+    if not isinstance(subject, str) or not subject or len(subject) > 36:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Token subject is invalid",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    return subject

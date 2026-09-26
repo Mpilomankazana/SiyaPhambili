@@ -1,12 +1,14 @@
 import os
+
 from sqlalchemy import create_engine
+from dotenv import load_dotenv
 from sqlalchemy.orm import declarative_base, sessionmaker
 
-# Connect to the internal Docker network database
-DATABASE_URL = os.getenv(
-    "DATABASE_URL", 
-    "postgresql://siyaphambili_admin:hackathon_secret_2026@siyaphambili_db:5432/siyaphambili_db"
-)
+load_dotenv()
+
+DATABASE_URL = os.getenv("DATABASE_URL")
+if not DATABASE_URL:
+    raise RuntimeError("DATABASE_URL must be set")
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

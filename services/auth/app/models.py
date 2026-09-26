@@ -1,7 +1,4 @@
-import uuid
-
-from sqlalchemy import Column, String, DateTime
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy import Column, DateTime, Integer, String
 from sqlalchemy.sql import func
 
 from .database import Base
@@ -14,8 +11,7 @@ class User(Base):
     password_hash = Column(String(255), nullable=False)
     name = Column(String(255), nullable=False)
     
-    # Defaulting to 'innovator'. Other roles: 'official', 'admin'
+    # Roles are assigned by the Auth service; registration always creates innovators.
     role = Column(String(50), default="innovator", nullable=False)
-    
-    # Automatically records the timestamp when the row is created
     created_at = Column(DateTime(timezone=True), server_default=func.now())
+    consent_given_at = Column(DateTime(timezone=True), nullable=True)
