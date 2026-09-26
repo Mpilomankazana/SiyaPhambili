@@ -28,37 +28,36 @@ export function AuthProvider({ children }) {
   }, []);
 
   const login = async (email, password) => {
-    // We will map this to the FastAPI OAuth2/login endpoint
-    const formData = new FormData();
-    formData.append('username', email); // FastAPI OAuth2 uses 'username' for the email field
-    formData.append('password', password);
-
-    const response = await apiClient.post('/auth/login', formData, {
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-    });
     
-    localStorage.setItem('token', response.data.access_token);
-    // Temporarily storing user info until we wire up the /me endpoint
-    const userData = { email, role: 'innovator' }; 
+
+    const response = await apiClient.post('/auth/login', {
+      email, password,
+    });
+
+    const token = response.data.access_token;
+    localStorage.setItem('token', token);
+
+    try{
+      const profileResponse = await apiClient.get('/auth/me');
+      const userData = profileResponse.data;
+    
+    
     localStorage.setItem('user', JSON.stringify(userData));
     setUser(userData);
+    return userData;
+    } catch (error){
+      localStorage.removeItem('token');
+      localStorage.removeItem('user')
+    }
   };
 
-  const register = async (userData) => {
-    await apiClient.post('/auth/register', userData);
-    // Automatically log them in after successful registration
-    await login(userData.email, userData.password);
-  };
+  const register =async ({email, password, name, consent_accepted}) => {
+    await apiClient.post('/auth/register', {email, password, name, consent_accepted});
+    return login(email, password);
+  }
+  
 
-  const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    setUser(null);
-  };
-
-  return (
-    <AuthContext.Provider value={{ user, login, register, logout, loading }}>
-      {!loading && children}
-    </AuthContext.Provider>
-  );
-}
+  
+}  
+await register({name, email, password, consent_accepted:true});
+navigate('/dashboard');
