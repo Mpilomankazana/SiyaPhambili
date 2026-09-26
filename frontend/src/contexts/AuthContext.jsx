@@ -4,18 +4,50 @@
  * TODO (Day 1 — ROADMAP.md Phase 3): implement against the real
  * /auth/login endpoint once it exists.
  */
-import { createContext, useContext, useState } from "react";
+import React, { createContext, useState, useEffect } from 'react';
+import api from '../api/client';
 
-const AuthContext = createContext(null);
+export const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [token, setToken] = useState(null);
-  const [role, setRole] = useState(null);
+  const [user, setUser] = useState(null);
+  const [token, setToken] = useState(localStorage.getItem('token') || null);
+  const [loading, setLoading] = useState(true);
 
-  const value = { token, role, setToken, setRole };
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-}
+  useEffect(() => {
+    if (token) {
+      api.get('/auth/me')
+        .then((res) => setUser(res.data))
+        .catch(() => logout())
+        .finally(() => setLoading(false));
+    } else {
+      setLoading(false);
+    }
+  }, [token]);
 
-export function useAuth() {
-  return useContext(AuthContext);
+  const login = async (email, password) => {
+    const res = await api.post('/auth/login', { email, password });
+    const newToken = res.data.access_token;
+    localStorage.setItem('token', newToken);
+    setToken(newToken);
+    const userRes = await api.get('/auth/me');
+    setUser(userRes.data);
+  };
+
+  const register = async (userData) => {
+    await api.post('/auth/register', userData);
+    await login(userData.email, userData.password);
+  };
+
+  const logout = () => {
+    localStorage.removeItem('token');
+    setToken(null);
+    setUser(null);
+  };
+
+  return (
+    <AuthContext.Provider value={{ user, token, loading, login, register, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
 }

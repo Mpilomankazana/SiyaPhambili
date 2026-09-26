@@ -1,25 +1,34 @@
-/**
- * Main router configuration.
- * TODO (Day 1/2 — ROADMAP.md Phase 3):
- * - Public Registry view
- * - Project Submission form
- * - Stage-Gate status component
- * - Admin dashboard (Phase 4)
- */
-import { Typography, Container } from "@mui/material";
+import React from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import theme from '../../src/theme';
+import { AuthProvider } from './context/AuthContext';
+import Navbar from './components/Navbar';
+import Registry from './pages/Registry';
+import { Login, Register } from './pages/AuthPages';
+import ProjectDetails from './pages/ProjectDetails';
+import NewProject from './pages/NewProject';
+import Dashboard from './pages/Dashboard';
 
-function App() {
+export default function App() {
   return (
-    <Container sx={{ mt: 8, textAlign: "center" }}>
-      <Typography variant="h3" gutterBottom>
-        SiyaPhambili
-      </Typography>
-      <Typography variant="subtitle1" color="text.secondary">
-        We Move Forward — scaffolding ready, routes land during the
-        hackathon (ROADMAP.md Phase 3).
-      </Typography>
-    </Container>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <AuthProvider>
+        <BrowserRouter>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Navigate to="/projects" replace />} />
+            <Route path="/projects" element={<Registry />} />
+            <Route path="/projects/:id" element={<ProjectDetails />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/projects/new" element={<NewProject />} />
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
-
-export default App;
