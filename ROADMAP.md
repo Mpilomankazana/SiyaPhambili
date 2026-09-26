@@ -17,10 +17,10 @@ Use the following status indicators throughout this document:
 
 ### Priority
 
-* 🔴 **CRITICAL** — MVP cannot be considered complete without this.
-* 🟠 **HIGH** — Required for a strong MVP/demo.
-* 🟡 **MEDIUM** — Implement if time permits.
-* ⚪ **POST-MVP** — Do not allow this to interrupt the hackathon critical path.
+* 🔴 **CRITICAL** —
+* 🟠 **HIGH** —
+* 🟡 **MEDIUM** —
+* ⚪ **POST-MVP** —
 
 ---
 
