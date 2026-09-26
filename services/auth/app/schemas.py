@@ -25,3 +25,12 @@ class UserRegisterRequest(BaseModel):
         if len(value) < 8:
             raise ValueError("Password must be at least 8 characters long")
         return value
+
+class UserLoginRequest(BaseModel):
+    email: EmailStr
+    password: str
+
+class TokenResponse(BaseModel):
+    status: str
+    access_token: str
+    token_type: str = "bearer"
