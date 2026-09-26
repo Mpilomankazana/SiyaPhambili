@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  /* Override the default sans font with Poppins */
+  --font-sans: "Poppins", sans-serif;
+  
+  /* Define your custom mist palette */
+  --color-mist-900: #1e2430;
+}
+
+@layer base {
+  body {
+    /* Apply mist-900 background and white text globally */
+    @apply bg-mist-900 text-white antialiased;
+  }
+}
