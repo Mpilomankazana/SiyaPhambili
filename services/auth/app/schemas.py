@@ -1,12 +1,6 @@
-"""
-Pydantic request/response schemas for the Auth Service.
+from pydantic import BaseModel, EmailStr, field_validator
 
-TODO (Day 1 — ROADMAP.md Phase 3):
-- UserRegisterRequest / UserRegisterResponse
-- UserLoginRequest / TokenResponse
-- RoleUpdateRequest
-See docs/api/api-contracts.md for the exact payload shapes.
-"""
+
 class UserRegisterRequest(BaseModel):
     email: EmailStr
     password: str
@@ -18,7 +12,7 @@ class UserRegisterRequest(BaseModel):
         if not value.strip():
             raise ValueError("Name must not be empty")
         return value
-    
+
     @field_validator("password")
     @classmethod
     def validate_password(cls, value: str) -> str:
@@ -26,11 +20,26 @@ class UserRegisterRequest(BaseModel):
             raise ValueError("Password must be at least 8 characters long")
         return value
 
+
+class UserRegisterResponse(BaseModel):
+    status: str
+    message: str
+    user_id: str
+
+
 class UserLoginRequest(BaseModel):
     email: EmailStr
     password: str
+
 
 class TokenResponse(BaseModel):
     status: str
     access_token: str
     token_type: str = "bearer"
+
+
+class UserResponse(BaseModel):
+    id: str
+    email: EmailStr
+    name: str
+    role: str
