@@ -6,7 +6,7 @@ class UserRegisterRequest(BaseModel):
     name: str
     email: EmailStr
     password: str
-    role: str = "innovator"
+    consent_accepted: Literal[True]
 
     @field_validator("name")
     @classmethod

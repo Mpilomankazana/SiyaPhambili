@@ -59,3 +59,4 @@ class ContactRequest(Base):
     message = Column(Text, nullable=False)
     status = Column(String(20), default="pending", nullable=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    consent_given_at = Column(DateTime(timezone=True), nullable=True)

@@ -11,53 +11,83 @@ export function AuthProvider({ children }) {
   // Check if a user is already logged in when the app loads
   // Check if a user is already logged in when the app loads
   useEffect(() => {
-    const checkAuthStatus = async () => {
+    let cancelled = false;
+
+    const restoreSession = async () => {
       const token = localStorage.getItem('token');
-      if (token) {
-        // Future MVP Step: const response = await apiClient.get('/auth/me');
-        // For now, we decode the basic user info from storage
-        const storedUser = localStorage.getItem('user');
-        if (storedUser) {
-          setUser(JSON.parse(storedUser));
+
+      if (!token) {
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const response = await apiClient.get('/auth/me');
+
+        if (!cancelled) {
+          setUser(response.data);
+          localStorage.setItem('user', JSON.stringify(response.data));
+        }
+      } catch {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+
+        if (!cancelled) {
+          setUser(null);
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
         }
       }
-      setLoading(false);
     };
 
-    checkAuthStatus();
+    restoreSession();
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const login = async (email, password) => {
-    
+    const response = await apiClient.post('/auth/login', { email, password });
+    localStorage.setItem('token', response.data.access_token);
 
-    const response = await apiClient.post('/auth/login', {
-      email, password,
-    });
-
-    const token = response.data.access_token;
-    localStorage.setItem('token', token);
-
-    try{
+    try {
       const profileResponse = await apiClient.get('/auth/me');
       const userData = profileResponse.data;
-    
-    
-    localStorage.setItem('user', JSON.stringify(userData));
-    setUser(userData);
-    return userData;
-    } catch (error){
+
+      localStorage.setItem('user', JSON.stringify(userData));
+      setUser(userData);
+      return userData;
+    } catch (error) {
       localStorage.removeItem('token');
-      localStorage.removeItem('user')
+      localStorage.removeItem('user');
+      setUser(null);
+      throw error;
     }
   };
 
-  const register =async ({email, password, name, consent_accepted}) => {
-    await apiClient.post('/auth/register', {email, password, name, consent_accepted});
-    return login(email, password);
-  }
-  
+  const register = async ({ email, password, name, consent_accepted }) => {
+    await apiClient.post('/auth/register', {
+      email,
+      password,
+      name,
+      consent_accepted,
+    });
 
-  
-}  
-await register({name, email, password, consent_accepted:true});
-navigate('/dashboard');
+    return login(email, password);
+  };
+
+  const logout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    setUser(null);
+  };
+
+  return (
+    <AuthContext.Provider value={{ user, login, register, logout, loading }}>
+      {!loading && children}
+    </AuthContext.Provider>
+  );
+}

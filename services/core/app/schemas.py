@@ -3,6 +3,13 @@ from typing import Literal
 from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
+from pydantic.types import EmailStr
+
+class UserRegisterRequest(BaseModel):
+    name: str
+    email: EmailStr
+    password: str
+    consent_accepted: Literal[True]
 
 
 class ProjectCreateRequest(BaseModel):

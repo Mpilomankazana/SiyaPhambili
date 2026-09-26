@@ -11,3 +11,4 @@ class User(Base):
     name = Column(String, nullable=False)
     role = Column(String, default="innovator", nullable=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
+    consent_given_at = Column(DateTime(timezone=True), nullable=True)
