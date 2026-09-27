@@ -11,6 +11,8 @@ export default defineConfig({
     tailwindcss(),
   ],
   server: {
+    host: true,
+    allowedHosts: ['siyaphambili.onrender.com'],
     proxy: {
       '/api/v1': {
         target: apiProxyTarget,
@@ -18,4 +20,4 @@ export default defineConfig({
       },
     },
   },
-})  
+})
