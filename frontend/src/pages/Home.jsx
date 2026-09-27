@@ -1,15 +1,11 @@
-import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
 
 export default function Home() {
-  const { user } = useContext(AuthContext);
-
   return (
     <div className="mx-auto max-w-6xl py-10 sm:py-16">
       <section className="grid items-center gap-10 lg:grid-cols-[1.2fr_0.8fr]">
         <div>
-          <p className="text-sm font-semibold uppercase text-cyan-400">
+          <p className="text-sm font-semibold uppercase text-brand-teal">
             SiyaPhambili · We move forward
           </p>
           <h1 className="mt-4 max-w-3xl text-4xl font-bold leading-tight text-white sm:text-5xl">
@@ -22,28 +18,34 @@ export default function Home() {
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
               to="/projects"
-              className="rounded-md bg-cyan-700 px-5 py-3 font-semibold text-white hover:bg-cyan-600"
+              className="rounded-md bg-brand-teal px-5 py-3 font-semibold text-white transition-colors hover:bg-brand-teal-hover"
             >
               Explore the registry
-            </Link>
-            <Link
-              to={user ? '/dashboard' : '/register'}
-              className="rounded-md border border-gray-600 px-5 py-3 font-semibold text-white hover:bg-zinc-800"
-            >
-              {user ? 'Go to your workspace' : 'Join as an innovator'}
             </Link>
           </div>
         </div>
 
-        <aside className="border-l-2 border-cyan-700 py-2 pl-6 sm:pl-8">
+        {/* Razor-thin elegant border on the left */}
+        <aside className="border-l border-brand-teal py-2 pl-6 sm:pl-8">
           <p className="text-sm font-semibold uppercase text-gray-400">From discovery to delivery</p>
           <ol className="mt-5 space-y-4">
             {['Idea', 'Prototype', 'Pilot', 'Scale', 'Implemented'].map((stage, index) => (
-              <li key={stage} className="flex items-center gap-4 text-white">
-                <span className="grid size-8 shrink-0 place-items-center rounded-full bg-zinc-800 text-sm text-cyan-300">
+              <li key={stage} className="group flex cursor-pointer items-center gap-4">
+                {/* Static Number Circle */}
+                <span className="grid size-8 shrink-0 place-items-center rounded-full border border-brand-teal bg-zinc-800 text-sm font-bold text-white">
                   {index + 1}
                 </span>
-                <span className="font-medium">{stage}</span>
+                
+                {/* Disney Beam Text Container */}
+                <span className="relative overflow-hidden rounded-full px-4 py-1.5">
+                  {/* The animated beam sweeping left to right on hover */}
+                  <span className="absolute left-0 top-0 h-full w-0 rounded-full bg-brand-teal opacity-30 shadow-[0_0_15px_var(--color-brand-teal)] transition-all duration-500 ease-out group-hover:w-full"></span>
+                  
+                  {/* The stage text standing securely above the beam */}
+                  <span className="relative z-10 font-medium tracking-wide text-white">
+                    {stage}
+                  </span>
+                </span>
               </li>
             ))}
           </ol>

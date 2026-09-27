@@ -7,6 +7,10 @@
   
   /* Define your custom mist palette */
   --color-mist-900: #1e2430;
+
+  /* The rich corporate teal extracted from your design */
+  --color-brand-teal: #0d5c3e;
+  --color-brand-teal-hover: #0a4a32;
 }
 
 @layer base {
