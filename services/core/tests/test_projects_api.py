@@ -69,7 +69,9 @@ def test_core_mvp_project_and_contact_flows():
             payload = {
                 "title": "Registry demo",
                 "sector_id": sector_id,
+                "description": "A civic service to make innovation easier to discover.",
                 "problem_statement": "Solutions are hard to discover.",
+                "solution": "Publish and progress projects through an accountable registry.",
                 "license_type": "Other",
                 "license_note": "Contact the team for reuse terms",
                 "contact_required": True,
@@ -82,6 +84,10 @@ def test_core_mvp_project_and_contact_flows():
             listing = client.get("/")
             assert listing.status_code == 200
             assert "problem_statement" not in listing.json()["data"][0]
+            assert "solution" not in listing.json()["data"][0]
+            assert listing.json()["data"][0]["description"] == payload["description"]
+            assert len(client.get("/?search=discover").json()["data"]) == 1
+            assert len(client.get(f"/?sector_id={sector_id}&stage=Idea").json()["data"]) == 1
 
             public_detail = client.get(f"/{project_id}")
             assert public_detail.status_code == 200
@@ -91,6 +97,11 @@ def test_core_mvp_project_and_contact_flows():
                 f"/{project_id}", headers=auth_header("innovator", owner_id)
             )
             assert owner_detail.json()["data"]["problem_statement"] == payload["problem_statement"]
+            assert owner_detail.json()["data"]["solution"] == payload["solution"]
+
+            owned_projects = client.get("/mine", headers=auth_header("innovator", owner_id))
+            assert owned_projects.status_code == 200
+            assert owned_projects.json()["data"][0]["id"] == project_id
 
             denied_transition = client.put(
                 f"/{project_id}/stage",
@@ -107,6 +118,11 @@ def test_core_mvp_project_and_contact_flows():
             assert transition.status_code == 200, transition.text
             assert transition.json()["current_stage"] == "Prototype"
 
+            stage_history = client.get(f"/{project_id}/stage-history")
+            assert stage_history.status_code == 200
+            assert stage_history.json()["data"][0]["updated_by"] == official_id
+            assert stage_history.json()["data"][0]["verification_notes"] == "Verified"
+
             invalid_transition = client.put(
                 f"/{project_id}/stage",
                 json={"new_stage": "Scale"},
@@ -116,16 +132,54 @@ def test_core_mvp_project_and_contact_flows():
 
             contact = client.post(
                 f"/{project_id}/contact-requests",
-                json={"message": "We would like to discuss a pilot."},
-                headers=auth_header("official", official_id),
+                json={
+                    "requester_name": "Public Partner",
+                    "requester_email": "partner@example.org",
+                    "message": "We would like to discuss a pilot.",
+                    "consent_accepted": True,
+                },
             )
             assert contact.status_code == 201
+
+            missing_contact_consent = client.post(
+                f"/{project_id}/contact-requests",
+                json={
+                    "requester_name": "No Consent",
+                    "requester_email": "no-consent@example.org",
+                    "message": "Please call me.",
+                },
+            )
+            assert missing_contact_consent.status_code == 422
+
+            missing_project_contact = client.post(
+                f"/{uuid4()}/contact-requests",
+                json={
+                    "requester_name": "Public Partner",
+                    "requester_email": "partner@example.org",
+                    "message": "We would like to discuss a pilot.",
+                    "consent_accepted": True,
+                },
+            )
+            assert missing_project_contact.status_code == 404
+
+            official_contact = client.post(
+                f"/{project_id}/contact-requests",
+                json={"message": "We can support the next stage."},
+                headers=auth_header("official", official_id),
+            )
+            assert official_contact.status_code == 201
 
             owner_requests = client.get(
                 f"/{project_id}/contact-requests", headers=auth_header("innovator", owner_id)
             )
             assert owner_requests.status_code == 200
-            assert owner_requests.json()["data"][0]["requested_by"] == official_id
+            requests = owner_requests.json()["data"]
+            official_request = next(item for item in requests if item["requested_by"] == official_id)
+            assert official_request["message"] == "We can support the next stage."
+            public_request = next(item for item in requests if item["requested_by"] == "public")
+            assert public_request["requested_by"] == "public"
+            assert public_request["requester_email"] == "partner@example.org"
+            assert public_request["consent_given_at"] is not None
 
             other_user_requests = client.get(
                 f"/{project_id}/contact-requests", headers=auth_header("innovator")
@@ -134,7 +188,7 @@ def test_core_mvp_project_and_contact_flows():
 
         with TestingSession() as db:
             assert db.query(StageGateHistory).count() == 1
-            assert db.query(ContactRequest).count() == 1
+            assert db.query(ContactRequest).count() == 2
             project = db.query(Project).one()
             assert project.user_id == owner_id
             assert project.current_stage == "Prototype"

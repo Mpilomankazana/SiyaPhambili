@@ -72,28 +72,22 @@ For a deep dive into our architecture and technical decisions, please review our
 
 1. Copy `.env.example` to `.env` and replace the placeholder passwords and JWT secret.
 2. Start the services with `docker compose up --build -d`.
-3. Apply the service-owned database migrations:
+3. Compose runs each service's migrations after PostgreSQL is healthy. Seed the demo super-admin, official, innovator, sectors, and public projects:
 
    ```bash
-   docker compose exec auth-service alembic upgrade head
-   docker compose exec core-service alembic upgrade head
-   ```
-4. Seed the initial super-admin and official accounts:
-
-   ```bash
-   docker compose exec auth-service python app/seed.py
+   make seed
    ```
 
-The seed script requires `DEMO_USER_PASSWORD` to be set to at least 12 characters. Do not use the example values outside local development.
+The seed script requires `DEMO_USER_PASSWORD` to be set to at least 12 characters. The demo accounts are `admin@siyaphambili.org`, `official@siyaphambili.org`, and `innovator@siyaphambili.org`; all use that configured password. Do not use the example values outside local development. `make migrate` safely reapplies both services' additive migrations without resetting existing data. Auth preserves its existing `alembic_version` history (and repairs the previously missing consent column); Core uses a separate `core_alembic_version` table because both services share PostgreSQL.
 
 ## Note: `prototype/` vs `frontend/`
 
 The repo currently contains two frontend lineages:
 
-- **`prototype/`** — a pre-existing Create React App / UXPin export, already deployed at the Prototype link above. Visual/UX reference only.
-- **`frontend/`** — the active microservices-era build (Vite + React + MUI), scaffolded but not yet wired to real endpoints.
+- **`prototype/`** — a pre-existing Create React App / UXPin export, retained as visual/product reference only.
+- **`frontend/`** — the active Vite + React application, wired to the real API through the Nginx gateway.
 
-**Team decision needed before/at the hackathon:** is `prototype/` archived as design reference only, or does `frontend/` adopt specific screens/components from it? Whoever owns this, update this note once decided.
+The production application remains `frontend/`; `prototype/` is not deployed as a competing frontend.
 
 ## Team: Fantastic 4
 

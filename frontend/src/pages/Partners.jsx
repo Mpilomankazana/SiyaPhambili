@@ -3,6 +3,13 @@ import { Link, Navigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import apiClient from '../api/client';
 
+const nextStages = {
+  Idea: 'Prototype',
+  Prototype: 'Pilot',
+  Pilot: 'Scale',
+  Scale: 'Implemented',
+};
+
 export default function Partners() {
   const { user, loading: authLoading } = useContext(AuthContext);
   const [projects, setProjects] = useState([]);
@@ -12,6 +19,9 @@ export default function Partners() {
   const [requestingProject, setRequestingProject] = useState(null);
   const [message, setMessage] = useState('');
   const [requestStatus, setRequestStatus] = useState('');
+  const [transitionProject, setTransitionProject] = useState(null);
+  const [transitionNotes, setTransitionNotes] = useState('');
+  const [transitionStatus, setTransitionStatus] = useState('');
 
   const canPartner = ['official', 'super_admin'].includes(user?.role);
 
@@ -26,7 +36,15 @@ export default function Partners() {
 
       try {
         const response = await apiClient.get('/projects');
-        if (active) setProjects(response.data.data);
+        const projectsWithHistory = await Promise.all(response.data.data.map(async (project) => {
+          try {
+            const historyResponse = await apiClient.get(`/projects/${project.id}/stage-history`);
+            return { ...project, history: historyResponse.data.data };
+          } catch {
+            return { ...project, history: [] };
+          }
+        }));
+        if (active) setProjects(projectsWithHistory);
       } catch {
         if (active) setError('Projects could not be loaded. Please try again.');
       } finally {
@@ -64,6 +82,29 @@ export default function Partners() {
     }
   }
 
+  async function advanceStage(event, project) {
+    event.preventDefault();
+    setTransitionStatus('');
+    const newStage = nextStages[project.current_stage];
+    if (!newStage) return;
+
+    try {
+      await apiClient.put(`/projects/${project.id}/stage`, {
+        new_stage: newStage,
+        verification_notes: transitionNotes.trim() || null,
+      });
+      const historyResponse = await apiClient.get(`/projects/${project.id}/stage-history`);
+      setProjects((items) => items.map((item) => item.id === project.id
+        ? { ...item, current_stage: newStage, history: historyResponse.data.data }
+        : item));
+      setTransitionStatus(`${project.title} advanced to ${newStage}.`);
+      setTransitionProject(null);
+      setTransitionNotes('');
+    } catch (requestError) {
+      setTransitionStatus(requestError.response?.data?.detail || 'Stage could not be advanced. Please try again.');
+    }
+  }
+
   return (
     <section className="mx-auto max-w-6xl py-8">
       <header className="mb-8">
@@ -80,6 +121,9 @@ export default function Partners() {
         <p role="status" className="mb-4 text-sm text-cyan-300">
           {requestStatus}
         </p>
+      )}
+      {transitionStatus && (
+        <p role="status" className="mb-4 text-sm text-cyan-300">{transitionStatus}</p>
       )}
 
       {loading && <p role="status" className="py-8 text-gray-300">Loading projects…</p>}
@@ -125,6 +169,39 @@ export default function Partners() {
               >
                 View project
               </Link>
+
+              <div className="mt-4 border-t border-gray-800 pt-4">
+                <h3 className="font-medium text-white">Stage review</h3>
+                {project.history?.length ? (
+                  <ol className="mt-2 space-y-2 text-sm text-gray-300">
+                    {project.history.map((entry) => (
+                      <li key={entry.id}>
+                        {entry.previous_stage} → {entry.new_stage}
+                        {entry.verification_notes && <span className="block text-gray-400">{entry.verification_notes}</span>}
+                      </li>
+                    ))}
+                  </ol>
+                ) : <p className="mt-2 text-sm text-gray-400">No stage changes recorded.</p>}
+
+                {nextStages[project.current_stage] && (
+                  transitionProject === project.id ? (
+                    <form onSubmit={(event) => advanceStage(event, project)} className="mt-3 space-y-3">
+                      <label className="block text-sm text-gray-300">
+                        Verification notes <span className="text-gray-500">(optional)</span>
+                        <textarea value={transitionNotes} onChange={(event) => setTransitionNotes(event.target.value)} maxLength={2000} rows={3} className="mt-1 w-full rounded-md border border-gray-700 bg-zinc-800 p-3 text-white" />
+                      </label>
+                      <div className="flex gap-3">
+                        <button type="submit" className="rounded-md bg-cyan-700 px-4 py-2 font-semibold text-white hover:bg-cyan-600">Confirm {nextStages[project.current_stage]}</button>
+                        <button type="button" onClick={() => setTransitionProject(null)} className="px-3 py-2 text-gray-300 hover:text-white">Cancel</button>
+                      </div>
+                    </form>
+                  ) : (
+                    <button type="button" onClick={() => { setTransitionStatus(''); setTransitionProject(project.id); }} className="mt-3 rounded-md border border-cyan-700 px-4 py-2 text-sm font-semibold text-cyan-300 hover:bg-cyan-950">
+                      Advance to {nextStages[project.current_stage]}
+                    </button>
+                  )
+                )}
+              </div>
 
               {requestingProject === project.id ? (
                 <form

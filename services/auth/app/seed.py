@@ -17,6 +17,7 @@ DEMO_PASSWORD = os.getenv("DEMO_USER_PASSWORD")
 DEMO_USERS = [
     {"email": "admin@siyaphambili.org", "name": "Hackathon Judge", "role": "super_admin"},
     {"email": "official@siyaphambili.org", "name": "Demo Official", "role": "official"},
+    {"email": "innovator@siyaphambili.org", "name": "Demo Innovator", "role": "innovator"},
 ]
 
 

@@ -31,9 +31,12 @@ export default function Registry() {
           setProjects(projectsResponse.data.data);
           setSectors(sectorsResponse.data.data);
         }
-      } catch {
+      } catch (requestError) {
         if (active) {
-          setError('Could not load the registry. Check that the API is running and try again.');
+          const status = requestError.response?.status;
+          setError(status
+            ? `Could not load the registry (API ${status}). Check the service logs and try again.`
+            : 'Could not reach the API. Check that the services are running and try again.');
         }
       } finally {
         if (active) {
@@ -56,7 +59,9 @@ export default function Registry() {
   const normalizedSearch = search.trim().toLowerCase();
 
   const filteredProjects = projects.filter((project) => {
-    const matchesSearch = project.title.toLowerCase().includes(normalizedSearch);
+    const matchesSearch = `${project.title} ${project.description ?? ''}`
+      .toLowerCase()
+      .includes(normalizedSearch);
     const matchesSector = !sectorId || String(project.sector_id) === sectorId;
     const matchesStage = !stage || project.current_stage === stage;
 
@@ -160,6 +165,9 @@ export default function Registry() {
               <h2 className="mt-2 text-xl font-semibold text-white">
                 {project.title}
               </h2>
+              {project.description && (
+                <p className="mt-2 text-sm leading-6 text-gray-300">{project.description}</p>
+              )}
               <p className="mt-3 text-sm text-gray-300">
                 Stage: {project.current_stage}
               </p>
@@ -179,16 +187,4 @@ export default function Registry() {
       )}
     </section>
   );
-}
-
-function getMockProjects() {
-  return [
-    { id: 1, title: "Digiguard SOC", sector: "Technology", current_stage: "Prototype", description: "A tri-stack AI-powered Security Operations Center." },
-    { id: 2, title: "AgriConnect Mobile", sector: "Agriculture", current_stage: "Idea", description: "USSD and mobile app platform connecting rural farmers." },
-    { id: 3, title: "EduStream Remote", sector: "Education", current_stage: "Pilot", description: "Low-bandwidth collaborative platform for audio streaming." },
-    { id: 4, title: "HealthSync", sector: "Healthcare", current_stage: "Scale", description: "Centralized patient record system for mobile clinics." },
-    { id: 5, title: "CivicVoice", sector: "Community Development", current_stage: "Idea", description: "A platform for reporting municipal faults securely." },
-    { id: 6, title: "SmartGrid Analytics", sector: "Technology", current_stage: "Implemented", description: "Predictive maintenance for local power infrastructure." },
-    { id: 7, title: "FarmIoT Sensors", sector: "Agriculture", current_stage: "Pilot", description: "Soil moisture tracking using low-cost hardware." }
-  ];
 }

@@ -14,6 +14,11 @@ services:
       - "5433:5432" # Exposed for local DBeaver access
     volumes:
       - postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
     networks:
       - siyaphambili_net
 
@@ -27,13 +32,42 @@ services:
     ports:
       - "5050:80" # Exposed for team web UI access
     depends_on:
-      - siyaphambili_db
+      siyaphambili_db:
+        condition: service_healthy
     networks:
       - siyaphambili_net
 
   # ---------------------------------------
   # Backend Microservices Layer
   # ---------------------------------------
+  auth-migrations:
+    build:
+      context: ./services/auth
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@siyaphambili_db:5432/${POSTGRES_DB}
+    command: ["alembic", "upgrade", "head"]
+    depends_on:
+      siyaphambili_db:
+        condition: service_healthy
+    networks:
+      - siyaphambili_net
+
+  core-migrations:
+    build:
+      context: ./services/core
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@siyaphambili_db:5432/${POSTGRES_DB}
+    command: ["alembic", "upgrade", "head"]
+    depends_on:
+      siyaphambili_db:
+        condition: service_healthy
+    networks:
+      - siyaphambili_net
+
   auth-service:
     build:
       context: ./services/auth
@@ -48,7 +82,13 @@ services:
     volumes:
       - ./services/auth:/app # Hot-reloading
     depends_on:
-      - siyaphambili_db
+      auth-migrations:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "python", "-c", "from urllib.request import urlopen; urlopen('http://localhost:8001/health')"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
     networks:
       - siyaphambili_net
 
@@ -66,7 +106,13 @@ services:
     volumes:
       - ./services/core:/app # Hot-reloading
     depends_on:
-      - siyaphambili_db
+      core-migrations:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "python", "-c", "from urllib.request import urlopen; urlopen('http://localhost:8002/health')"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
     networks:
       - siyaphambili_net
 
@@ -81,8 +127,15 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - auth-service
-      - core-service
+      auth-service:
+        condition: service_healthy
+      core-service:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8000/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
     networks:
       - siyaphambili_net
 
@@ -92,7 +145,9 @@ services:
     container_name: frontend
     restart: unless-stopped
     ports:
-      - "5173:5173" # Assuming Vite default port
+      - "5173:5173"
+    environment:
+      VITE_API_PROXY_TARGET: http://gateway:8000
     volumes:
       - ./frontend:/app # Hot-reloading
       - /app/node_modules # Prevent overriding container node_modules

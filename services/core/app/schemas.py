@@ -2,8 +2,7 @@ from datetime import datetime
 from typing import Literal
 from uuid import UUID
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
-from pydantic.types import EmailStr
+from pydantic import BaseModel, ConfigDict, EmailStr, Field, field_validator, model_validator
 
 class UserRegisterRequest(BaseModel):
     name: str
@@ -17,13 +16,15 @@ class ProjectCreateRequest(BaseModel):
 
     title: str = Field(min_length=1, max_length=255)
     sector_id: int = Field(gt=0)
+    description: str = Field(min_length=1, max_length=2000)
     problem_statement: str = Field(min_length=1)
+    solution: str = Field(min_length=1)
     license_type: Literal["MIT", "All Rights Reserved", "Other"] = "Other"
     license_note: str | None = None
     contact_required: bool = False
     visibility: Literal["public", "restricted"] = "public"
 
-    @field_validator("title", "problem_statement")
+    @field_validator("title", "description", "problem_statement", "solution")
     @classmethod
     def strip_required_text(cls, value: str) -> str:
         value = value.strip()
@@ -48,6 +49,7 @@ class ProjectSummaryResponse(BaseModel):
 
     id: UUID
     title: str
+    description: str | None
     sector_id: int
     current_stage: str
     license_type: str
@@ -57,6 +59,7 @@ class ProjectSummaryResponse(BaseModel):
 
 class ProjectDetailResponse(ProjectSummaryResponse):
     problem_statement: str
+    solution: str | None
     license_note: str | None
     visibility: str
 
@@ -64,6 +67,11 @@ class ProjectDetailResponse(ProjectSummaryResponse):
 class ProjectListResponse(BaseModel):
     status: Literal["success"] = "success"
     data: list[ProjectSummaryResponse]
+
+
+class ProjectDetailListResponse(BaseModel):
+    status: Literal["success"] = "success"
+    data: list[ProjectDetailResponse]
 
 
 class SectorResponse(BaseModel):
@@ -98,10 +106,29 @@ class StageTransitionResponse(BaseModel):
     updated_at: datetime
 
 
+class StageHistoryResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: UUID
+    updated_by: str
+    previous_stage: str
+    new_stage: str
+    verification_notes: str | None
+    transitioned_at: datetime
+
+
+class StageHistoryListResponse(BaseModel):
+    status: Literal["success"] = "success"
+    data: list[StageHistoryResponse]
+
+
 class ContactRequestCreate(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     message: str = Field(min_length=1, max_length=4000)
+    requester_name: str | None = Field(default=None, min_length=1, max_length=255)
+    requester_email: EmailStr | None = None
+    consent_accepted: bool = False
 
     @field_validator("message")
     @classmethod
@@ -117,9 +144,12 @@ class ContactRequestResponse(BaseModel):
 
     id: UUID
     requested_by: str
+    requester_name: str | None
+    requester_email: EmailStr | None
     message: str
     status: str
     created_at: datetime
+    consent_given_at: datetime | None
 
 
 class ContactRequestCreateResponse(BaseModel):

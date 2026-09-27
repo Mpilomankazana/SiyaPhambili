@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-// Create an Axios instance pointing to the FastAPI backend Gateway/Auth service
+// Use the Vite dev proxy so the browser uses the same origin on either 5173 or 5174.
 const apiClient = axios.create({
-  baseURL: 'http://localhost:8000/api/v1',
+  baseURL: '/api/v1',
   headers: {
     'Content-Type': 'application/json',
   },

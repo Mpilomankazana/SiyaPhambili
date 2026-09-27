@@ -20,7 +20,7 @@ jobs:
       - run: pip install -r requirements.txt flake8 black
       - run: flake8 . || true   # relax to `flake8 .` (no `|| true`) once code lands
       - run: black --check . || true
-      - run: pytest || true     # relax once real tests exist (ROADMAP.md Phase 3)
+      - run: pytest
 
   lint-and-test-core:
     runs-on: ubuntu-latest
@@ -35,7 +35,7 @@ jobs:
       - run: pip install -r requirements.txt flake8 black
       - run: flake8 . || true
       - run: black --check . || true
-      - run: pytest || true
+      - run: pytest
 
   frontend:
     runs-on: ubuntu-latest
@@ -48,6 +48,7 @@ jobs:
         with:
           node-version: "20"
       - run: npm install
+      - run: npm run lint
       - run: npm run build
       - run: npm audit --audit-level=high || true   # relax `|| true` once dependencies are finalized
 

@@ -37,8 +37,9 @@ class UserLoginRequest(BaseModel):
 
 
 class TokenResponse(BaseModel):
+    status: Literal["success"] = "success"
     access_token: str
-    token_type: str
+    token_type: str = "bearer"
 
 
 class UserResponse(BaseModel):

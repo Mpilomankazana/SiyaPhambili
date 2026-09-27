@@ -13,6 +13,7 @@ most policy-literate member sanity-check it before the demo.
 | Role | `Users.role` | Access control (innovator / official / super_admin) |
 | Project details | `Projects.*` | The registry itself — title, sector, problem statement |
 | Verification notes | `StageGateHistory.verification_notes` | Accountability trail for stage-gate approvals |
+| Contact request details | `ContactRequests.requester_name`, `requester_email`, `message` | Allow a project owner to respond to an introduction request; public requester consent is timestamped |
 
 ## Lawful basis
 
@@ -25,6 +26,9 @@ tracking public-sector accountability for civic innovation adoption.
 - Add a `consent_given_at` timestamp to `Users`, set at registration,
   alongside a checkbox on the registration form describing what the
   platform does with submitted data.
+- Public contact requests require separate explicit consent; the
+  requester's name, email, and message are shared with the project
+  owner and are not published in the registry.
 - See `docs/architecture/erd.md` and `docs/api/api-contracts.md` for
   the corresponding schema/API note.
 

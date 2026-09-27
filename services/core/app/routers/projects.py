@@ -3,6 +3,7 @@ from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from fastapi.security import HTTPAuthorizationCredentials
+from sqlalchemy import or_
 from sqlalchemy.orm import Session
 
 from app.database import get_db
@@ -11,7 +12,9 @@ from app.schemas import (
 	ProjectCreateRequest,
 	ProjectCreateResponse,
 	ProjectDetailResponse,
+	ProjectDetailListResponse,
 	ProjectListResponse,
+	StageHistoryListResponse,
 	ProjectSummaryResponse,
 	SectorListResponse,
 	StageTransitionRequest,
@@ -45,6 +48,7 @@ def list_sectors(db: Session = Depends(get_db)):
 def list_projects(
 	sector_id: int | None = Query(default=None, gt=0),
 	stage: str | None = Query(default=None, max_length=50),
+	search: str | None = Query(default=None, max_length=255),
 	db: Session = Depends(get_db),
 ):
 	query = db.query(Project).filter(Project.visibility == "public")
@@ -52,6 +56,11 @@ def list_projects(
 		query = query.filter(Project.sector_id == sector_id)
 	if stage is not None:
 		query = query.filter(Project.current_stage == stage)
+	if search and search.strip():
+		search_term = f"%{search.strip()}%"
+		query = query.filter(
+			or_(Project.title.ilike(search_term), Project.description.ilike(search_term))
+		)
 	return {"data": query.order_by(Project.created_at.desc()).all()}
 
 
@@ -73,7 +82,9 @@ def create_project(
 		user_id=get_subject_id(current_user),
 		sector_id=payload.sector_id,
 		title=payload.title,
+		description=payload.description,
 		problem_statement=payload.problem_statement,
+		solution=payload.solution,
 		current_stage="Idea",
 		license_type=payload.license_type,
 		license_note=payload.license_note,
@@ -87,6 +98,20 @@ def create_project(
 		message="Project registered successfully.",
 		project_id=project.id,
 	)
+
+
+@router.get("/mine", response_model=ProjectDetailListResponse)
+def list_my_projects(
+	db: Session = Depends(get_db),
+	current_user: dict = Depends(get_current_user),
+):
+	projects = (
+		db.query(Project)
+		.filter(Project.user_id == get_subject_id(current_user))
+		.order_by(Project.created_at.desc())
+		.all()
+	)
+	return {"data": projects}
 
 
 @router.get("/{project_id}")
@@ -114,6 +139,30 @@ def get_project(
 		"status": "success",
 		"data": response_model.model_validate(project),
 	}
+
+
+@router.get("/{project_id}/stage-history", response_model=StageHistoryListResponse)
+def get_stage_history(
+	project_id: UUID,
+	credentials: HTTPAuthorizationCredentials | None = Depends(bearer_scheme),
+	db: Session = Depends(get_db),
+):
+	project = db.query(Project).filter(Project.id == project_id).first()
+	if project is None:
+		raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Project not found")
+	current_user = decode_and_verify_token(credentials.credentials) if credentials else None
+	is_owner = current_user is not None and current_user.get("sub") == project.user_id
+	is_official = current_user is not None and current_user.get("role") in {"official", "super_admin"}
+	if project.visibility != "public" and not (is_owner or is_official):
+		raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Project not found")
+
+	history = (
+		db.query(StageGateHistory)
+		.filter(StageGateHistory.project_id == project.id)
+		.order_by(StageGateHistory.transitioned_at.asc())
+		.all()
+	)
+	return {"data": history}
 
 
 @router.put(

@@ -26,8 +26,8 @@ export default function Register() {
         consent_accepted: consentAccepted,
       });
       navigate('/dashboard');
-    } catch {
-      setError('Registration failed. Check your details and try again.');
+    } catch (requestError) {
+      setError(requestError.response?.data?.detail || 'Registration failed. Check your details and try again.');
     } finally {
       setSubmitting(false);
     }
@@ -106,7 +106,9 @@ export default function Register() {
               className="mt-1"
             />
             <span>
-              I consent to using my registration information to create and manage my account.
+              I consent to using my registration information to create and manage my account. See the{' '}
+              <Link to="/privacy" className="text-cyan-400 underline">privacy notice</Link> and{' '}
+              <Link to="/terms" className="text-cyan-400 underline">project terms</Link>.
             </span>
           </label>
 

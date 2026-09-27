@@ -46,6 +46,11 @@ name their own trade-offs.
 
 - `.env` is gitignored; only `.env.example` (placeholder values) is
   committed.
+- The tracked environment template must contain placeholders only. If
+  any previously committed development credentials were used in a live
+  environment, rotate the database, pgAdmin, and JWT secrets there;
+  editing the template does not revoke exposed values or remove them
+  from repository history.
 - `JWT_SECRET_KEY` in `.env.example` is a placeholder — **generate a
   real random value before the hackathon** (e.g. `openssl rand -hex 32`)
   and never commit the real one.

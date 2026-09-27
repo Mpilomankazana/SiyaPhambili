@@ -86,7 +86,7 @@ All API requests in the local development environment will be routed to:
 ### 2.1. Retrieve All Projects (The Registry — Summary View)
 *   **Endpoint:** `GET /projects`
 *   **Purpose:** Fetches a list of all hackathon solutions.
-*   **Query Parameters:** `?sector_id={id}&stage={stage}` (Optional filtering)
+*   **Query Parameters:** `?sector_id={id}&stage={stage}&search={text}` (Optional filtering/search)
 *   **Visibility rule:** this endpoint always returns **summary fields only**, regardless of caller — no `problem_statement`, no team info. It lets the registry stay publicly discoverable without publishing every team's full write-up to anyone who scrapes the endpoint. See `docs/ip-and-user-protection-notes.md`.
 *   **Response Payload (200 OK):**
     ```json
@@ -96,6 +96,7 @@ All API requests in the local development environment will be routed to:
         {
           "id": "uuid",
           "title": "SiyaPhambili",
+          "description": "A public short summary of the project.",
           "sector_id": 1,
           "current_stage": "Prototype",
           "license_type": "Other",
@@ -117,16 +118,27 @@ All API requests in the local development environment will be routed to:
       "data": {
         "id": "uuid",
         "title": "SiyaPhambili",
+        "description": "A public short summary of the project.",
         "sector_id": 1,
         "current_stage": "Prototype",
         "license_type": "Other",
         "license_note": "Contact team for reuse terms",
         "contact_required": true,
         "problem_statement": "Siloed civic innovation projects lack visibility.",
+        "solution": "A verified registry helps projects find partners and progress.",
         "created_at": "2026-09-25T16:00:00Z"
       }
     }
     ```
+
+  ### 2.2.1. Retrieve the Authenticated Innovator's Projects
+  *   **Endpoint:** `GET /projects/mine`
+  *   **Headers:** `Authorization: Bearer <innovator_jwt>`
+  *   **Purpose:** Returns full details for projects owned by the caller, including restricted projects. The owner id is taken from the verified token.
+
+  ### 2.2.2. Retrieve Public Stage History
+  *   **Endpoint:** `GET /projects/{id}/stage-history`
+  *   **Purpose:** Returns recorded forward transitions and verification notes for public projects. Restricted project history is visible only to its owner or an authenticated official/super-admin.
 
 ### 2.3. Register a New Solution
 *   **Endpoint:** `POST /projects`
@@ -139,7 +151,9 @@ All API requests in the local development environment will be routed to:
     {
       "title": "SiyaPhambili",
       "sector_id": 1,
+      "description": "A public summary of the project.",
       "problem_statement": "Siloed civic innovation projects lack visibility.",
+      "solution": "A verified registry helps projects find partners and progress.",
       "license_type": "Other",
       "license_note": "Contact team for reuse terms",
       "contact_required": true,
@@ -179,14 +193,18 @@ All API requests in the local development environment will be routed to:
 
 ### 2.5. Request Contact With a Project's Team
 *   **Endpoint:** `POST /projects/{id}/contact-requests`
-*   **Purpose:** Lets an official/sponsor request an introduction **without** the platform exposing the innovator's raw email address publicly. The innovator sees the request (and requester's identity) and chooses whether to respond — the platform never auto-discloses contact details. Most relevant when `contact_required: true`, but available regardless of `license_type`.
-*   **Headers:** `Authorization: Bearer <official_jwt>`
+*   **Purpose:** Lets a visitor or an authenticated official request an introduction without the platform publishing the innovator's email. The project owner sees the request details in their dashboard.
+*   **Headers:** Optional for public requests; officials may include `Authorization: Bearer <official_jwt>`.
 *   **Request Payload:**
     ```json
     {
-      "message": "We'd like to discuss piloting this in our department."
+      "requester_name": "Example Partner",
+      "requester_email": "partner@example.org",
+      "message": "We'd like to discuss piloting this in our department.",
+      "consent_accepted": true
     }
     ```
+    Public requests must include name, valid email, message, and `consent_accepted: true`. Authenticated officials may omit requester details because their verified user id is recorded instead.
 *   **Response Payload (201 Created):**
     ```json
     {

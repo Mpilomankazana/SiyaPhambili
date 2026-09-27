@@ -91,21 +91,23 @@ React Frontend
 
 The MVP is considered functionally complete when:
 
-* [ ]  🔴 Users can register.
-* [ ]  🔴 Users can log in.
-* [ ]  🔴 JWT authentication works.
-* [ ]  🔴 Roles are enforced.
-* [ ]  🔴 Users can submit projects.
+* [X]  🔴 Users can register.
+* [X]  🔴 Users can log in.
+* [X]  🔴 JWT authentication works.
+* [X]  🔴 Roles are enforced.
+* [X]  🔴 Users can submit projects.
 * [ ]  🔴 Projects are stored in PostgreSQL.
-* [ ]  🔴 Public users can browse projects.
-* [ ]  🔴 Users can view project details.
-* [ ]  🔴 Projects can progress through stage gates.
-* [ ]  🔴 Stage transitions are recorded.
-* [ ]  🔴 Users can submit contact requests.
-* [ ]  🔴 The React frontend consumes the real API.
-* [ ]  🔴 The complete system works through the Nginx gateway.
-* [ ]  🔴 Demo data exists.
+* [X]  🔴 Public users can browse projects.
+* [X]  🔴 Users can view project details.
+* [X]  🔴 Projects can progress through stage gates.
+* [X]  🔴 Stage transitions are recorded.
+* [X]  🔴 Users can submit contact requests.
+* [X]  🔴 The React frontend consumes the real API.
+* [X]  🔴 The complete service stack starts through Compose and the API is reachable through Nginx/Vite.
+* [X]  🔴 Demo data seed scripts exist; seeding the current local database is pending `DEMO_USER_PASSWORD` configuration.
 * [ ]  🔴 The primary demo journey works without manual database manipulation.
+
+> **Verification note (2026-09-27):** Auth/Core tests, frontend lint/build, Docker image builds, Compose startup, PostgreSQL migrations, and API reads through the gateway and both Vite ports (5173/5174) have been verified. Runtime inspection found and fixed the missing `users.consent_given_at` column, missing Core `email-validator` dependency in the old image, `localhost:5174` CORS/proxy mismatch, and `/health` being shadowed by the Core `/{project_id}` route. The local stack currently has sectors but no demo users/projects because `DEMO_USER_PASSWORD` is absent; the complete register→submit→review→contact browser flow remains unverified.
 
 ---
 
@@ -160,16 +162,16 @@ During the MVP phase:
 
 ### Architecture Tasks
 
-* [ ]  🔴 Verify Docker Compose starts all required services.
-* [ ]  🔴 Verify Auth Service starts.
-* [ ]  🔴 Verify Core Service starts.
-* [ ]  🔴 Verify PostgreSQL starts.
-* [ ]  🔴 Verify Nginx starts.
-* [ ]  🔴 Verify frontend starts.
-* [ ]  🔴 Verify Nginx routes `/api/v1/auth/*` correctly.
-* [ ]  🔴 Verify Nginx routes `/api/v1/projects/*` correctly.
-* [ ]  🔴 Verify frontend communicates through the gateway.
-* [ ]  🟠 Remove unnecessary architecture blockers.
+* [X]  🔴 Verify Docker Compose starts all required services.
+* [X]  🔴 Verify Auth Service starts.
+* [X]  🔴 Verify Core Service starts.
+* [X]  🔴 Verify PostgreSQL starts.
+* [X]  🔴 Verify Nginx starts.
+* [X]  🔴 Verify frontend starts.
+* [X]  🔴 Verify Nginx routes `/api/v1/auth/*` correctly.
+* [X]  🔴 Verify Nginx routes `/api/v1/projects/*` correctly.
+* [X]  🔴 Verify frontend communicates through the gateway.
+* [X]  🟠 Remove unnecessary architecture blockers.
 
 * [>] ⚪ Additional microservices.
 
@@ -229,12 +231,12 @@ created_at
 
 Tasks:
 
-* [ ]  🔴 Create SQLAlchemy User model.
-* [ ]  🔴 Configure unique email.
-* [ ]  🔴 Implement password hash storage.
-* [ ]  🔴 Implement role.
-* [ ]  🔴 Create database migration.
-* [ ]  🔴 Verify user creation.
+* [X]  🔴 Create SQLAlchemy User model.
+* [X]  🔴 Configure unique email.
+* [X]  🔴 Implement password hash storage.
+* [X]  🔴 Implement role.
+* [X]  🔴 Create database migration.
+* [X]  🔴 Verify user creation.
 
 ---
 
@@ -250,10 +252,10 @@ description
 
 Tasks:
 
-* [ ]  🔴 Create Sector model.
-* [ ]  🔴 Create migration.
-* [ ]  🔴 Seed initial sectors.
-* [ ]  🔴 Implement sector retrieval.
+* [X]  🔴 Create Sector model.
+* [X]  🔴 Create migration.
+* [X]  🔴 Seed initial sectors.
+* [X]  🔴 Implement sector retrieval.
 
 Suggested seed data:
 
@@ -287,17 +289,17 @@ updated_at
 
 Tasks:
 
-* [ ]  🔴 Create Project model.
-* [ ]  🔴 Create relationships.
-* [ ]  🔴 Create migration.
-* [ ]  🔴 Implement project creation.
-* [ ]  🔴 Implement project retrieval.
-* [ ]  🔴 Implement project listing.
+* [X]  🔴 Create Project model.
+* [X]  🔴 Create relationships.
+* [X]  🔴 Create migration.
+* [X]  🔴 Implement project creation.
+* [X]  🔴 Implement project retrieval.
+* [X]  🔴 Implement project listing.
 
-* [🔴] Implement project ownership.
+* [X]  🔴 Implement project ownership.
 
 * [ ]  🟠 Implement project update.
-* [ ]  🟠 Implement search/filter.
+* [X]  🟠 Implement search/filter.
 
 ---
 
@@ -317,10 +319,10 @@ created_at
 
 Tasks:
 
-* [ ]  🔴 Create StageGateHistory model.
-* [ ]  🔴 Create migration.
-* [ ]  🔴 Record every valid stage transition.
-* [ ]  🔴 Retrieve project stage history.
+* [X]  🔴 Create StageGateHistory model.
+* [X]  🔴 Create migration.
+* [X]  🔴 Record every valid stage transition.
+* [X]  🔴 Retrieve project stage history.
 
 ---
 
@@ -339,23 +341,23 @@ created_at
 
 Tasks:
 
-* [ ]  🔴 Create ContactRequest model.
-* [ ]  🔴 Create migration.
-* [ ]  🔴 Implement contact request endpoint.
-* [ ]  🔴 Associate request with project.
+* [X]  🔴 Create ContactRequest model.
+* [X]  🔴 Create migration.
+* [X]  🔴 Implement contact request endpoint.
+* [X]  🔴 Associate request with project.
 
 ---
 
 ## 6. Database & Migration Infrastructure
 
-* [ ]  🔴 Connect SQLAlchemy metadata to Alembic.
-* [ ]  🔴 Generate initial migration.
-* [ ]  🔴 Run migration against clean PostgreSQL database.
-* [ ]  🔴 Verify all five tables exist.
-* [ ]  🔴 Create seed script.
-* [ ]  🔴 Seed sectors.
-* [ ]  🟠 Seed demonstration projects.
-* [ ]  🟠 Add development/demo users.
+* [X]  🔴 Connect SQLAlchemy metadata to Alembic.
+* [X]  🔴 Generate initial migration.
+* [X]  🔴 Run migration against PostgreSQL database.
+* [X]  🔴 Verify application tables exist.
+* [X]  🔴 Create seed script.
+* [X]  🔴 Seed sectors.
+* [X]  🟠 Seed demonstration projects.
+* [X]  🟠 Add development/demo users.
 * [ ]  🟡 Add migration rollback verification.
 
 ### Definition of Done
@@ -382,13 +384,13 @@ POST /api/v1/auth/register
 
 Tasks:
 
-* [ ]  🔴 Validate registration payload.
-* [ ]  🔴 Validate email.
-* [ ]  🔴 Validate password.
-* [ ]  🔴 Hash password.
-* [ ]  🔴 Save user.
-* [ ]  🔴 Reject duplicate email.
-* [ ]  🔴 Return appropriate response.
+* [X]  🔴 Validate registration payload.
+* [X]  🔴 Validate email.
+* [X]  🔴 Validate password.
+* [X]  🔴 Hash password.
+* [X]  🔴 Save user.
+* [X]  🔴 Reject duplicate email.
+* [X]  🔴 Return appropriate response.
 
 ---
 
@@ -402,13 +404,13 @@ POST /api/v1/auth/login
 
 Tasks:
 
-* [ ]  🔴 Verify email.
-* [ ]  🔴 Verify password.
-* [ ]  🔴 Generate JWT.
-* [ ]  🔴 Include user ID in token.
-* [ ]  🔴 Include role in token.
-* [ ]  🔴 Reject invalid credentials.
-* [ ]  🔴 Return authentication response.
+* [X]  🔴 Verify email.
+* [X]  🔴 Verify password.
+* [X]  🔴 Generate JWT.
+* [X]  🔴 Include user ID in token.
+* [X]  🔴 Include role in token.
+* [X]  🔴 Reject invalid credentials.
+* [X]  🔴 Return authentication response.
 
 ---
 
@@ -422,13 +424,13 @@ GET /api/v1/auth/me
 
 Tasks:
 
-* [ ]  🔴 Implement JWT dependency.
-* [ ]  🔴 Decode token.
-* [ ]  🔴 Validate expiration.
-* [ ]  🔴 Retrieve user.
-* [ ]  🔴 Return authenticated user.
-* [ ]  🔴 Reject missing token.
-* [ ]  🔴 Reject invalid token.
+* [X]  🔴 Implement JWT dependency.
+* [X]  🔴 Decode token.
+* [X]  🔴 Validate expiration.
+* [X]  🔴 Retrieve user.
+* [X]  🔴 Return authenticated user.
+* [X]  🔴 Reject missing token.
+* [X]  🔴 Reject invalid token.
 
 ---
 
@@ -439,22 +441,22 @@ MVP roles:
 ```text
 innovator
 official
-admin
+super_admin
 ```
 
 ### Innovator
 
-* [ ]  🔴 Register/login.
-* [ ]  🔴 Create projects.
-* [ ]  🔴 View own projects.
+* [X]  🔴 Register/login.
+* [X]  🔴 Create projects.
+* [X]  🔴 View own projects.
 * [ ]  🟠 Update own projects.
 
 ### Official
 
-* [ ]  🔴 Login.
-* [ ]  🔴 View projects.
-* [ ]  🔴 Review projects.
-* [ ]  🔴 Advance project stage.
+* [X]  🔴 Login.
+* [X]  🔴 View projects.
+* [X]  🔴 Review projects.
+* [X]  🔴 Advance project stage.
 
 ### Admin
 
@@ -463,9 +465,9 @@ admin
 
 ### Public
 
-* [ ]  🔴 View public projects.
-* [ ]  🔴 View project details.
-* [ ]  🔴 Submit contact requests.
+* [X]  🔴 View public projects.
+* [X]  🔴 View project details.
+* [X]  🔴 Submit contact requests.
 
 ### Security Rule
 
@@ -485,12 +487,12 @@ POST /api/v1/projects
 
 Tasks:
 
-* [ ]  🔴 Require authentication.
-* [ ]  🔴 Validate project payload.
-* [ ]  🔴 Associate project with authenticated user.
-* [ ]  🔴 Validate sector.
-* [ ]  🔴 Store project.
-* [ ]  🔴 Return created project.
+* [X]  🔴 Require authentication.
+* [X]  🔴 Validate project payload.
+* [X]  🔴 Associate project with authenticated user.
+* [X]  🔴 Validate sector.
+* [X]  🔴 Store project.
+* [X]  🔴 Return created project.
 
 ---
 
@@ -502,11 +504,11 @@ GET /api/v1/projects
 
 Tasks:
 
-* [ ]  🔴 Return public projects.
-* [ ]  🔴 Return project summary.
-* [ ]  🟠 Filter by sector.
-* [ ]  🟠 Filter by stage.
-* [ ]  🟠 Search by title/description.
+* [X]  🔴 Return public projects.
+* [X]  🔴 Return project summary.
+* [X]  🟠 Filter by sector.
+* [X]  🟠 Filter by stage.
+* [X]  🟠 Search by title/description.
 
 ---
 
@@ -518,10 +520,10 @@ GET /api/v1/projects/{id}
 
 Tasks:
 
-* [ ]  🔴 Retrieve project.
-* [ ]  🔴 Return project details.
+* [X]  🔴 Retrieve project.
+* [X]  🔴 Return project details.
 * [ ]  🔴 Return sector information.
-* [ ]  🔴 Handle project not found.
+* [X]  🔴 Handle project not found.
 
 ---
 
@@ -557,20 +559,20 @@ Implemented
 
 Tasks:
 
-* [ ]  🔴 Define allowed stages.
-* [ ]  🔴 Define valid forward transitions.
-* [ ]  🔴 Prevent invalid transitions.
-* [ ]  🔴 Require authorized user.
-* [ ]  🔴 Update current stage.
-* [ ]  🔴 Record StageGateHistory.
-* [ ]  🔴 Store transition notes.
-* [ ]  🔴 Return updated project.
-* [ ]  🔴 Implement stage history endpoint.
+* [X]  🔴 Define allowed stages.
+* [X]  🔴 Define valid forward transitions.
+* [X]  🔴 Prevent invalid transitions.
+* [X]  🔴 Require authorized user.
+* [X]  🔴 Update current stage.
+* [X]  🔴 Record StageGateHistory.
+* [X]  🔴 Store transition notes.
+* [X]  🔴 Return updated project.
+* [X]  🔴 Implement stage history endpoint.
 
 Example:
 
 ```text
-POST /api/v1/projects/{id}/stage
+PUT /api/v1/projects/{id}/stage
 ```
 
 Request:
@@ -578,7 +580,7 @@ Request:
 ```json
 {
   "new_stage": "Pilot",
-  "notes": "Pilot requirements verified."
+   "verification_notes": "Pilot requirements verified."
 }
 ```
 
@@ -623,11 +625,11 @@ Innovator
 
 Tasks:
 
-* [ ]  🔴 Create contact request endpoint.
-* [ ]  🔴 Validate requester information.
-* [ ]  🔴 Associate request with project.
-* [ ]  🔴 Store request.
-* [ ]  🟠 Provide authenticated innovator access to requests.
+* [X]  🔴 Create contact request endpoint.
+* [X]  🔴 Validate requester information.
+* [X]  🔴 Associate request with project.
+* [X]  🔴 Store request.
+* [X]  🟠 Provide authenticated innovator access to requests.
 
 * [>] ⚪ Email notifications.
 
@@ -652,7 +654,7 @@ The active frontend should become the actual application.
 ├── /projects/:id
 ├── /projects/new
 ├── /dashboard
-└── /admin/projects/:id
+└── /partners
 ```
 
 Tasks:
@@ -661,16 +663,16 @@ Tasks:
 * [X]  🔴 Configure API client.
 * [X]  🔴 Configure authentication context.
 
-* [~] 🔴 Implement login.
-* [~] 🔴 Implement registration.
-* [~] 🔴 Store authentication state.
+* [X] 🔴 Implement login.
+* [X] 🔴 Implement registration.
+* [X] 🔴 Store authentication state.
 
 * [X]  🔴 Implement logout.
 * [X]  🔴 Implement protected routes.
 
 ---
 
-## 	
+## 13. Public Registry
 
 The registry is one of the primary product screens.
 
@@ -680,12 +682,12 @@ Tasks:
 * [X]  🔴 Display project title.
 * [X]  🔴 Display sector.
 * [X]  🔴 Display stage.
-* [X]  🔴 Display short description.
+* [X]  🔴 Display short public summary.
 * [X]  🔴 Open project details.
 * [X]  🟠 Search projects.
 * [X]  🟠 Filter by sector.
 * [X]  🟠 Filter by stage.
-* [X]  🟡 Add pagination.
+* [ ]  🟡 Add pagination.
 
 ### Important
 
@@ -714,8 +716,8 @@ Tasks:
 * [X]  🔴 Display current stage.
 * [X]  🔴 Display stage progress.
 * [ ]  🔴 Display project owner/organization information where appropriate.
-* [ ]  🔴 Provide contact request action.
-* [ ]  🟠 Display stage history.
+* [X]  🔴 Provide contact request action.
+* [X]  🟠 Display stage history.
 
 Suggested visual:
 
@@ -738,12 +740,12 @@ Implemented
 
 Tasks:
 
-* [ ]  🔴 Display authenticated user's projects.
-* [ ]  🔴 Display current project stages.
-* [ ]  🔴 Provide "Submit Project".
-* [ ]  🔴 Provide project details.
+* [X]  🔴 Display authenticated user's projects.
+* [X]  🔴 Display current project stages.
+* [X]  🔴 Provide "Submit Project".
+* [X]  🔴 Provide project details.
 * [ ]  🟠 Provide project editing.
-* [ ]  🟠 Display contact requests.
+* [X]  🟠 Display contact requests.
 
 ---
 
@@ -762,12 +764,12 @@ Visibility
 
 Tasks:
 
-* [ ]  🔴 Create submission form.
-* [ ]  🔴 Validate required fields.
-* [ ]  🔴 Submit to API.
-* [ ]  🔴 Display success state.
-* [ ]  🔴 Redirect to project details/dashboard.
-* [ ]  🔴 Handle API errors.
+* [X]  🔴 Create submission form.
+* [X]  🔴 Validate required fields.
+* [X]  🔴 Submit to API.
+* [X]  🔴 Display success state.
+* [X]  🔴 Redirect to project details/dashboard.
+* [X]  🔴 Handle API errors.
 
 ---
 
@@ -777,14 +779,14 @@ The admin/official experience only needs to support the MVP stage-gate workflow.
 
 Tasks:
 
-* [ ]  🔴 Display submitted projects.
-* [ ]  🔴 Open project.
-* [ ]  🔴 Display current stage.
-* [ ]  🔴 Select next stage.
-* [ ]  🔴 Add verification notes.
-* [ ]  🔴 Submit transition.
-* [ ]  🔴 Display updated stage.
-* [ ]  🟠 Display stage history.
+* [X]  🔴 Display submitted projects.
+* [X]  🔴 Open project.
+* [X]  🔴 Display current stage.
+* [X]  🔴 Select next stage.
+* [X]  🔴 Add verification notes.
+* [X]  🔴 Submit transition.
+* [X]  🔴 Display updated stage.
+* [X]  🟠 Display stage history.
 
 Do not build a large administrative dashboard during the MVP.
 
@@ -804,10 +806,10 @@ Tasks:
 
 * [ ]  🔴 Review prototype UI.
 * [ ]  🔴 Identify reusable layouts/components.
-* [ ]  🔴 Recreate required MVP screens in `frontend/`.
-* [ ]  🔴 Preserve useful SiyaPhambili branding.
-* [ ]  🔴 Do not maintain two competing production frontends.
-* [ ]  [>] Treat `prototype/` as design/reference material after migration.
+* [X]  🔴 Recreate required MVP screens in `frontend/`.
+* [X]  🔴 Preserve useful SiyaPhambili branding.
+* [X]  🔴 Do not maintain two competing production frontends.
+* [X]  [>] Treat `prototype/` as design/reference material after migration.
 
 The production application remains:
 
@@ -825,13 +827,13 @@ The application must not appear empty during the demonstration.
 
 Tasks:
 
-* [ ]  🔴 Create seed script.
-* [ ]  🔴 Create sectors.
-* [ ]  🔴 Create demo users.
-* [ ]  🔴 Create demo projects.
-* [ ]  🔴 Give projects different stages.
+* [X]  🔴 Create seed script.
+* [X]  🔴 Create sectors.
+* [X]  🔴 Create demo users.
+* [X]  🔴 Create demo projects.
+* [X]  🔴 Give projects different stages.
 * [ ]  🔴 Verify projects appear in registry.
-* [ ]  🟠 Create realistic South African innovation examples.
+* [X]  🟠 Create fictional, locally relevant South African innovation examples.
 
 Suggested stages:
 
@@ -854,32 +856,32 @@ We are testing the paths that can break the demo.
 
 ### Authentication
 
-* [ ]  🔴 Registration succeeds.
-* [ ]  🔴 Duplicate email rejected.
-* [ ]  🔴 Login succeeds.
-* [ ]  🔴 Incorrect password rejected.
-* [ ]  🔴 Invalid JWT rejected.
-* [ ]  🔴 Expired JWT rejected.
+* [X]  🔴 Registration succeeds.
+* [X]  🔴 Duplicate email rejected.
+* [X]  🔴 Login succeeds.
+* [X]  🔴 Incorrect password rejected.
+* [X]  🔴 Invalid JWT rejected.
+* [X]  🔴 Expired JWT rejected.
 
 ### Projects
 
-* [ ]  🔴 Authenticated user can create project.
-* [ ]  🔴 Public user can list projects.
-* [ ]  🔴 Public user can view project.
+* [X]  🔴 Authenticated user can create project.
+* [X]  🔴 Public user can list projects.
+* [X]  🔴 Public user can view project.
 * [ ]  🔴 Unauthorized user cannot modify another user's project.
 
 ### Stage Gates
 
-* [ ]  🔴 Valid transition succeeds.
-* [ ]  🔴 Invalid transition rejected.
-* [ ]  🔴 Unauthorized transition rejected.
-* [ ]  🔴 Stage history is created.
+* [X]  🔴 Valid transition succeeds.
+* [X]  🔴 Invalid transition rejected.
+* [X]  🔴 Unauthorized transition rejected.
+* [X]  🔴 Stage history is created.
 
 ### Contact
 
-* [ ]  🔴 Contact request succeeds.
-* [ ]  🔴 Invalid project rejected.
-* [ ]  🔴 Request is persisted.
+* [X]  🔴 Contact request succeeds.
+* [X]  🔴 Invalid project rejected.
+* [X]  🔴 Request is persisted.
 
 ---
 
@@ -917,14 +919,14 @@ Tasks:
 
 Tasks:
 
-* [ ]  🔴 Passwords are hashed.
-* [ ]  🔴 JWT secret comes from environment.
-* [ ]  🔴 `.env` is not committed.
+* [X]  🔴 Passwords are hashed.
+* [X]  🔴 JWT secret comes from environment.
+* [X]  🔴 `.env` is not committed.
 * [ ]  🔴 Rotate exposed development credentials if necessary.
-* [ ]  🔴 Verify authorization server-side.
-* [ ]  🔴 Validate API input.
-* [ ]  🔴 Configure CORS correctly.
-* [ ]  🔴 Keep database credentials out of source code.
+* [X]  🔴 Verify authorization server-side.
+* [X]  🔴 Validate API input.
+* [X]  🔴 Configure local CORS allowlists.
+* [X]  🔴 Keep database credentials out of source code.
 * [ ]  🔴 Verify Gitleaks.
 * [ ]  🟠 Run Bandit.
 * [ ]  🟠 Run pip-audit.
@@ -936,17 +938,17 @@ Tasks:
 
 Tasks:
 
-* [ ]  🔴 `docker compose up` works.
-* [ ]  🔴 PostgreSQL starts.
-* [ ]  🔴 Auth starts.
-* [ ]  🔴 Core starts.
-* [ ]  🔴 Gateway starts.
-* [ ]  🔴 Frontend starts.
-* [ ]  🔴 Services can communicate.
-* [ ]  🔴 Database migrations can run.
-* [ ]  🔴 Seed data can be loaded.
-* [ ]  🟠 Fix Makefile commands.
-* [ ]  🟠 Add convenient development commands.
+* [X]  🔴 `docker compose up` works.
+* [X]  🔴 PostgreSQL starts.
+* [X]  🔴 Auth starts.
+* [X]  🔴 Core starts.
+* [X]  🔴 Gateway starts.
+* [X]  🔴 Frontend starts.
+* [X]  🔴 Services can communicate.
+* [X]  🔴 Database migrations can run.
+* [ ]  🔴 Demo users/projects can be seeded (requires `DEMO_USER_PASSWORD`).
+* [X]  🟠 Fix Makefile commands.
+* [X]  🟠 Add convenient migration and seed commands.
 
 Useful commands should include:
 
@@ -970,9 +972,9 @@ Only the critical CI checks should block the MVP.
 Tasks:
 
 * [ ]  🟠 Verify GitHub Actions runs.
-* [ ]  🟠 Run backend tests.
-* [ ]  🟠 Run frontend build.
-* [ ]  🟠 Run lint.
+* [X]  🟠 Run backend tests.
+* [X]  🟠 Run frontend build.
+* [X]  🟠 Run lint.
 * [ ]  🟠 Run security checks.
 
 * [>] ⚪ Full production CI/CD pipeline.

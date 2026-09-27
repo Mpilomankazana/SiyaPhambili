@@ -18,10 +18,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(projects.router, prefix="")
-app.include_router(contact_requests.router, prefix="")
-
-
 @app.get("/health")
 def health():
     return {"status": "success", "message": "Core Service is live!"}
+
+
+app.include_router(projects.router, prefix="")
+app.include_router(contact_requests.router, prefix="")

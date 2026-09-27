@@ -64,13 +64,15 @@ team ever reads isn't protecting anyone.
 
 ### 4. Contact requests, not exposed contact info
 
-An official/sponsor who wants to engage a team doesn't get the
-innovator's raw email from the registry. They send a `ContactRequest`
-(`POST /projects/{id}/contact-requests`); the innovator sees who's
-asking and why, and decides whether to respond:
+An interested visitor or official does not get the innovator's raw
+email from the registry. They submit a `ContactRequest`
+(`POST /projects/{id}/contact-requests`); the requester's details and
+message are visible to the project owner, who can decide whether to
+respond. Public requesters explicitly consent to sharing their name
+and email with that owner:
 
 ```
-Official → SiyaPhambili → Contact Request → Innovator decides whether to respond
+Visitor/Official → SiyaPhambili → Contact Request → Innovator decides whether to respond
 ```
 
 — never `Official → public registry → team's email/phone`. See

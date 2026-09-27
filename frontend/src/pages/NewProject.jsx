@@ -8,8 +8,10 @@ export default function NewProject() {
   const navigate = useNavigate();
   const [sectors, setSectors] = useState([]);
   const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
   const [sectorId, setSectorId] = useState('');
   const [problemStatement, setProblemStatement] = useState('');
+  const [solution, setSolution] = useState('');
   const [licenseType, setLicenseType] = useState('Other');
   const [licenseNote, setLicenseNote] = useState('');
   const [contactRequired, setContactRequired] = useState(false);
@@ -50,7 +52,9 @@ export default function NewProject() {
       const response = await apiClient.post('/projects', {
         title: title.trim(),
         sector_id: Number(sectorId),
+        description: description.trim(),
         problem_statement: problemStatement.trim(),
+        solution: solution.trim(),
         license_type: licenseType,
         license_note: licenseType === 'Other' ? licenseNote.trim() || null : null,
         contact_required: contactRequired,
@@ -71,6 +75,9 @@ export default function NewProject() {
       </Link>
       <h1 className="mt-3 text-3xl font-bold text-white">Submit a project</h1>
       <p className="mt-2 text-gray-300">Start with the information partners need to understand your solution.</p>
+      <p className="mt-4 rounded-md border border-amber-800 bg-amber-950/30 p-4 text-sm leading-6 text-amber-100">
+        SiyaPhambili records attribution and submission history; it does not establish legal ownership or exclusive IP rights. Public summaries are visible to everyone, and authorized reviewers can see detailed problem statements. Do not submit confidential information. Read the <Link to="/terms" className="underline">project terms</Link> and <Link to="/privacy" className="underline">privacy notice</Link>.
+      </p>
 
       {error && (
         <p role="alert" className="mt-5 rounded-md border border-red-800 p-3 text-red-300">{error}</p>
@@ -89,6 +96,19 @@ export default function NewProject() {
         </label>
 
         <label className="block text-sm font-medium text-gray-300">
+          Short public summary
+          <textarea
+            value={description}
+            onChange={(event) => setDescription(event.target.value)}
+            maxLength={2000}
+            required
+            rows={3}
+            className="mt-1 w-full rounded-md border border-gray-700 bg-zinc-800 px-3 py-2 text-white"
+          />
+          <span className="mt-1 block text-xs font-normal text-gray-400">This summary appears in the public registry.</span>
+        </label>
+
+        <label className="block text-sm font-medium text-gray-300">
           Sector
           <select
             value={sectorId}
@@ -102,6 +122,17 @@ export default function NewProject() {
               <option key={sector.id} value={sector.id}>{sector.name}</option>
             ))}
           </select>
+        </label>
+
+        <label className="block text-sm font-medium text-gray-300">
+          Proposed solution
+          <textarea
+            value={solution}
+            onChange={(event) => setSolution(event.target.value)}
+            required
+            rows={4}
+            className="mt-1 w-full rounded-md border border-gray-700 bg-zinc-800 px-3 py-2 text-white"
+          />
         </label>
 
         <label className="block text-sm font-medium text-gray-300">
