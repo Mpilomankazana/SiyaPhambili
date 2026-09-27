@@ -47,13 +47,12 @@ services:
     env: static
     rootDir: frontend
     buildCommand: npm install && npm run build
-    publishPath: dist
+    staticPublishPath: dist
     plan: free
     envVars:
       - key: VITE_API_URL
         value: ${siyaphambili-gateway.url}
     routes:
-      # This rewrite rule ensures React Router works correctly on page refresh
       - type: rewrite
         source: /*
         destination: /index.html
