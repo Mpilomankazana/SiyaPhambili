@@ -295,9 +295,7 @@ Tasks:
 * [X]  🔴 Implement project creation.
 * [X]  🔴 Implement project retrieval.
 * [X]  🔴 Implement project listing.
-
 * [X]  🔴 Implement project ownership.
-
 * [ ]  🟠 Implement project update.
 * [X]  🟠 Implement search/filter.
 
@@ -662,11 +660,9 @@ Tasks:
 * [X]  🔴 Configure React Router.
 * [X]  🔴 Configure API client.
 * [X]  🔴 Configure authentication context.
-
-* [X] 🔴 Implement login.
-* [X] 🔴 Implement registration.
-* [X] 🔴 Store authentication state.
-
+* [X]  🔴 Implement login.
+* [X]  🔴 Implement registration.
+* [X]  🔴 Store authentication state.
 * [X]  🔴 Implement logout.
 * [X]  🔴 Implement protected routes.
 

@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import { Mail, Lock } from 'lucide-react';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -28,7 +29,7 @@ export default function Login() {
   };
 
   return (
-    <div className="flex items-center justify-center mt-16">
+    <div className="flex items-center justify-center mt-16 px-4">
       <div className="w-full max-w-md p-8 space-y-6 bg-zinc-900 border border-gray-800 rounded-xl shadow-2xl">
         <h2 className="text-3xl font-bold text-center text-white">Welcome Back</h2>
         
@@ -38,37 +39,47 @@ export default function Login() {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-5">
           <div>
             <label className="block mb-2 text-sm font-medium text-gray-300">Email Address</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-3 text-white bg-mist-900 border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-              required
-            />
+            <div className="relative">
+              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full pl-10 p-3 text-white bg-mist-900 border border-gray-700 rounded-lg focus:border-brand-teal focus:ring-1 focus:ring-brand-teal focus:outline-none transition-shadow"
+                placeholder="name@example.com"
+                required
+              />
+            </div>
           </div>
+          
           <div>
             <label className="block mb-2 text-sm font-medium text-gray-300">Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-3 text-white bg-mist-900 border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-              required
-            />
+            <div className="relative">
+              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full pl-10 p-3 text-white bg-mist-900 border border-gray-700 rounded-lg focus:border-brand-teal focus:ring-1 focus:ring-brand-teal focus:outline-none transition-shadow"
+                placeholder="••••••••"
+                required
+              />
+            </div>
           </div>
+          
           <button
             type="submit"
-            className="w-full py-3 mt-4 font-semibold text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700"
+            className="w-full py-3 mt-6 font-semibold text-white transition-colors bg-brand-teal rounded-lg hover:bg-brand-teal-hover"
           >
             Sign In
           </button>
         </form>
 
         <p className="text-sm text-center text-gray-400">
-          Don't have an account? <Link to="/register" className="text-blue-400 hover:underline">Register here</Link>
+          Don't have an account? <Link to="/register" className="text-brand-teal hover:underline">Register here</Link>
         </p>
       </div>
     </div>
