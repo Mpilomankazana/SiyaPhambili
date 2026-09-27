@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute'; // Import the new guard
 
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -15,20 +16,21 @@ export default function App() {
     <AuthProvider>
       <BrowserRouter>
         {/* Tailwind Styled Navigation */}
-        <nav className="bg-zinc-900 border-b border-gray-800 p-4 mb-8">
-          <div className="container mx-auto flex gap-6">
-            <Link to="/" className="text-white hover:text-gray-300 transition-colors font-medium">Home</Link>
-            <Link to="/projects" className="text-white hover:text-gray-300 transition-colors font-medium">Registry</Link>
-            <Link to="/login" className="text-white hover:text-gray-300 transition-colors font-medium">Login</Link>
-            <Link to="/register" className="text-white hover:text-gray-300 transition-colors font-medium">Register</Link>
-            <Link to="/dashboard" className="text-white hover:text-gray-300 transition-colors font-medium">Dashboard</Link>
-            <Link to="/projects/new" className="text-white hover:text-gray-300 transition-colors font-medium">New Project</Link>
+        <nav className="p-4 mb-8 border-b bg-zinc-900 border-gray-800">
+          <div className="container flex gap-6 mx-auto">
+            <Link to="/" className="font-medium text-white transition-colors hover:text-gray-300">Home</Link>
+            <Link to="/projects" className="font-medium text-white transition-colors hover:text-gray-300">Registry</Link>
+            <Link to="/login" className="font-medium text-white transition-colors hover:text-gray-300">Login</Link>
+            <Link to="/register" className="font-medium text-white transition-colors hover:text-gray-300">Register</Link>
+            <Link to="/dashboard" className="font-medium text-white transition-colors hover:text-gray-300">Dashboard</Link>
+            <Link to="/projects/new" className="font-medium text-white transition-colors hover:text-gray-300">New Project</Link>
           </div>
         </nav>
 
         {/* Main Content Container */}
-        <main className="container mx-auto px-4">
+        <main className="container px-4 mx-auto">
           <Routes>
+            {/* Public Routes */}
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
@@ -38,6 +40,25 @@ export default function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/partners" element={<Partners />} />
             
+            {/* Protected Routes */}
+            <Route 
+              path="/dashboard" 
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/projects/new" 
+              element={
+                <ProtectedRoute>
+                  <NewProject />
+                </ProtectedRoute>
+              } 
+            />
+            
+            {/* Fallback Route */}
             <Route path="*" element={<h2 className="text-2xl font-bold text-white">404 - Page Not Found</h2>} />
           </Routes>
         </main>

@@ -180,3 +180,15 @@ export default function Registry() {
     </section>
   );
 }
+
+function getMockProjects() {
+  return [
+    { id: 1, title: "Digiguard SOC", sector: "Technology", current_stage: "Prototype", description: "A tri-stack AI-powered Security Operations Center." },
+    { id: 2, title: "AgriConnect Mobile", sector: "Agriculture", current_stage: "Idea", description: "USSD and mobile app platform connecting rural farmers." },
+    { id: 3, title: "EduStream Remote", sector: "Education", current_stage: "Pilot", description: "Low-bandwidth collaborative platform for audio streaming." },
+    { id: 4, title: "HealthSync", sector: "Healthcare", current_stage: "Scale", description: "Centralized patient record system for mobile clinics." },
+    { id: 5, title: "CivicVoice", sector: "Community Development", current_stage: "Idea", description: "A platform for reporting municipal faults securely." },
+    { id: 6, title: "SmartGrid Analytics", sector: "Technology", current_stage: "Implemented", description: "Predictive maintenance for local power infrastructure." },
+    { id: 7, title: "FarmIoT Sensors", sector: "Agriculture", current_stage: "Pilot", description: "Soil moisture tracking using low-cost hardware." }
+  ];
+}

@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import apiClient from '../api/client';
+import { useState, useEffect } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import { getProject } from '../api/projects';
 
 export default function ProjectDetails() {
   const { id } = useParams();
@@ -9,75 +9,85 @@ export default function ProjectDetails() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    let active = true;
-
-    async function loadProject() {
-      setLoading(true);
-      setError('');
-
+    const fetchProjectDetails = async () => {
       try {
-        const response = await apiClient.get(`/projects/${id}`);
-        if (active) setProject(response.data.data);
-      } catch (requestError) {
-        if (active) {
-          setError(requestError.response?.status === 404
-            ? 'This project could not be found or is not available to you.'
-            : 'Project details could not be loaded. Please try again.');
-        }
+        const data = await getProject(id);
+        setProject(data);
+      } catch {
+        setError('Failed to connect to the backend. Displaying demo data.');
+        setProject(getMockProjectDetails(id));
       } finally {
-        if (active) setLoading(false);
+        setLoading(false);
       }
-    }
-
-    loadProject();
-    return () => {
-      active = false;
     };
+    fetchProjectDetails();
   }, [id]);
 
+  if (loading) return <div className="py-12 text-center text-gray-400">Loading project details...</div>;
+  if (!project) return <div className="py-12 text-center text-red-400">Project not found.</div>;
+
   return (
-    <section className="mx-auto max-w-4xl py-8">
-      <Link to="/projects" className="text-sm font-medium text-cyan-400 hover:underline">
-        Back to registry
+    <div className="max-w-4xl mx-auto mt-8 mb-12">
+      <Link to="/projects" className="inline-block mb-6 text-sm text-blue-400 hover:text-blue-300">
+        &larr; Back to Registry
       </Link>
-
-      {loading && <p role="status" className="py-10 text-gray-300">Loading project…</p>}
-
-      {!loading && error && (
-        <p role="alert" className="mt-6 rounded-md border border-red-800 p-4 text-red-300">{error}</p>
+      
+      {error && (
+        <div className="p-4 mb-6 text-sm text-yellow-400 border border-yellow-900 rounded-lg bg-yellow-900/20">
+          {error}
+        </div>
       )}
 
-      {!loading && project && (
-        <article className="mt-5">
-          <p className="text-sm font-semibold uppercase text-cyan-400">{project.current_stage}</p>
-          <h1 className="mt-2 text-3xl font-bold text-white">{project.title}</h1>
-          <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-sm text-gray-300">
-            <p>Sector ID: {project.sector_id}</p>
-            <p>License: {project.license_type}</p>
-            <p>Contact required: {project.contact_required ? 'Yes' : 'No'}</p>
-          </div>
+      <div className="p-8 border shadow-lg bg-zinc-900 border-gray-800 rounded-xl">
+        <div className="flex items-start justify-between gap-4 mb-6">
+          <h1 className="text-3xl font-bold text-white">{project.title}</h1>
+          <span className="px-4 py-2 text-sm font-semibold text-blue-400 bg-blue-900/30 rounded-full">
+            {project.current_stage}
+          </span>
+        </div>
+        
+        <div className="flex gap-4 mb-8 text-sm font-medium text-gray-400">
+          <p>Sector: <span className="text-gray-200">{project.sector}</span></p>
+          <p>&bull;</p>
+          <p>Visibility: <span className="text-gray-200">{project.visibility || 'Public'}</span></p>
+        </div>
 
-          {project.problem_statement && (
-            <section className="mt-8 border-t border-gray-800 pt-6">
-              <h2 className="text-lg font-semibold text-white">The problem</h2>
-              <p className="mt-3 whitespace-pre-wrap leading-7 text-gray-300">
-                {project.problem_statement}
-              </p>
-            </section>
-          )}
+        <div className="space-y-8">
+          <section>
+            <h2 className="mb-3 text-xl font-semibold text-white border-b border-gray-800 pb-2">Description</h2>
+            <p className="leading-relaxed text-gray-300">{project.description}</p>
+          </section>
 
-          {project.license_note && (
-            <section className="mt-6">
-              <h2 className="text-lg font-semibold text-white">License note</h2>
-              <p className="mt-2 whitespace-pre-wrap text-gray-300">{project.license_note}</p>
-            </section>
-          )}
+          <section>
+            <h2 className="mb-3 text-xl font-semibold text-white border-b border-gray-800 pb-2">Problem Statement</h2>
+            <p className="leading-relaxed text-gray-300">{project.problem_statement || "Information not provided yet."}</p>
+          </section>
 
-          <p className="mt-8 text-sm text-gray-400">
-            Added {new Date(project.created_at).toLocaleDateString()}
-          </p>
-        </article>
-      )}
-    </section>
+          <section>
+            <h2 className="mb-3 text-xl font-semibold text-white border-b border-gray-800 pb-2">Proposed Solution</h2>
+            <p className="leading-relaxed text-gray-300">{project.solution || "Information not provided yet."}</p>
+          </section>
+        </div>
+        
+        <div className="mt-10 pt-6 border-t border-gray-800">
+          <button className="px-6 py-3 font-medium text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700">
+            Contact Innovator
+          </button>
+        </div>
+      </div>
+    </div>
   );
+}
+
+function getMockProjectDetails(id) {
+  return {
+    id: parseInt(id),
+    title: "Digiguard SOC",
+    sector: "Technology",
+    current_stage: "Prototype",
+    visibility: "Public",
+    description: "A tri-stack AI-powered Security Operations Center utilizing Python, Java WebSockets, and React to monitor network anomalies in real-time.",
+    problem_statement: "Cybersecurity infrastructure in public institutions is reactive rather than proactive. Currently, most municipal networks lack real-time anomaly detection, leading to extended downtime when breaches occur.",
+    solution: "Digiguard acts as an intelligent shield, leveraging machine learning models to detect unusual traffic patterns and automatically isolate affected nodes before lateral movement can happen."
+  };
 }

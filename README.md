@@ -1,8 +1,9 @@
 # SiyaPhambili — "We Move Forward"
 
-A Civic Innovation Bridge Platform for South Africa, built for **Geekulcha Annual Hackathon 2026 (#GKHack26)** Gov Innovation Platform challenge.
+A Civic Innovation Bridge Platform for South Africa, built for **Geekulcha Annual Hackathon 2026 (#GKHack26#GKHack26)** Gov Innovation Platform challenge.
 
 ## Prototype
+
 https://siya-phambili-prototype.onrender.com
 
 ## The Problem
@@ -16,6 +17,7 @@ SiyaPhambili starts as a public, searchable registry of South African hackathon 
 ## Tech Stack
 
 **Frontend**
+
 - React (Single Page Application)
 - Tailwind CSS v4 (Utility-first Component Styling)
 
@@ -23,19 +25,23 @@ SiyaPhambili starts as a public, searchable registry of South African hackathon 
 ...
 
 **Backend Microservices & Gateway**
+
 - Nginx (API Gateway & Reverse Proxy)
 - Python / FastAPI (Isolated Auth & Core Services)
 - SQLAlchemy & Alembic (ORM & Migrations)
 
 **Database & Infrastructure**
+
 - PostgreSQL (Relational Database)
 - Docker & Docker Compose (Container Orchestration)
 
 **Testing**
+
 - Pytest (Backend Unit & Integration Testing)
 - Cypress (Frontend & E2E Acceptance Testing)
 
 **DevOps & Hosting**
+
 - Render (Cloud Hosting)
 - GitHub Actions (CI/CD Pipelines)
 - Makefile (Task Automation)
@@ -43,6 +49,7 @@ SiyaPhambili starts as a public, searchable registry of South African hackathon 
 ## Prerequisites
 
 Before starting development, ensure all team members have the following installed:
+
 - Git & Git Bash
 - Docker Desktop (Configured for WSL 2 on Windows)
 - Python 3.14.4
@@ -51,6 +58,7 @@ Before starting development, ensure all team members have the following installe
 ## Documentation
 
 For a deep dive into our architecture and technical decisions, please review our documentation:
+
 - **`ROADMAP.md`:** The project execution roadmap and task tracking.
 - **`ARCHITECTURE.md`:** The complete repository directory tree and microservice boundaries.
 - **`docs/adr/`:** Architecture Decision Records (ADRs) detailing our technical choices.
@@ -66,22 +74,22 @@ For a deep dive into our architecture and technical decisions, please review our
 2. Start the services with `docker compose up --build -d`.
 3. Apply the service-owned database migrations:
 
-	```bash
-	docker compose exec auth-service alembic upgrade head
-	docker compose exec core-service alembic upgrade head
-	```
-
+   ```bash
+   docker compose exec auth-service alembic upgrade head
+   docker compose exec core-service alembic upgrade head
+   ```
 4. Seed the initial super-admin and official accounts:
 
-	```bash
-	docker compose exec auth-service python app/seed.py
-	```
+   ```bash
+   docker compose exec auth-service python app/seed.py
+   ```
 
 The seed script requires `DEMO_USER_PASSWORD` to be set to at least 12 characters. Do not use the example values outside local development.
 
 ## Note: `prototype/` vs `frontend/`
 
 The repo currently contains two frontend lineages:
+
 - **`prototype/`** — a pre-existing Create React App / UXPin export, already deployed at the Prototype link above. Visual/UX reference only.
 - **`frontend/`** — the active microservices-era build (Vite + React + MUI), scaffolded but not yet wired to real endpoints.
 

@@ -11,9 +11,12 @@
 
 Use the following status indicators throughout this document:
 
-* [ ] **Not Started**
+* [ ]  **Not Started**
+
 * [~] **In Progress**
-* [x] **Complete**
+
+* [X]  **Complete**
+
 * [!] **Blocked**
 * [>] **Deferred to Post-MVP**
 
@@ -69,7 +72,7 @@ Stage History Recorded
 The system should work end-to-end:
 
 ```text
-React Frontend
+React ontendFrontend
        ↓
 Nginx API Gateway
        ↓
@@ -88,21 +91,21 @@ React Frontend
 
 The MVP is considered functionally complete when:
 
-* [ ] 🔴 Users can register.
-* [ ] 🔴 Users can log in.
-* [ ] 🔴 JWT authentication works.
-* [ ] 🔴 Roles are enforced.
-* [ ] 🔴 Users can submit projects.
-* [ ] 🔴 Projects are stored in PostgreSQL.
-* [ ] 🔴 Public users can browse projects.
-* [ ] 🔴 Users can view project details.
-* [ ] 🔴 Projects can progress through stage gates.
-* [ ] 🔴 Stage transitions are recorded.
-* [ ] 🔴 Users can submit contact requests.
-* [ ] 🔴 The React frontend consumes the real API.
-* [ ] 🔴 The complete system works through the Nginx gateway.
-* [ ] 🔴 Demo data exists.
-* [ ] 🔴 The primary demo journey works without manual database manipulation.
+* [ ]  🔴 Users can register.
+* [ ]  🔴 Users can log in.
+* [ ]  🔴 JWT authentication works.
+* [ ]  🔴 Roles are enforced.
+* [ ]  🔴 Users can submit projects.
+* [ ]  🔴 Projects are stored in PostgreSQL.
+* [ ]  🔴 Public users can browse projects.
+* [ ]  🔴 Users can view project details.
+* [ ]  🔴 Projects can progress through stage gates.
+* [ ]  🔴 Stage transitions are recorded.
+* [ ]  🔴 Users can submit contact requests.
+* [ ]  🔴 The React frontend consumes the real API.
+* [ ]  🔴 The complete system works through the Nginx gateway.
+* [ ]  🔴 Demo data exists.
+* [ ]  🔴 The primary demo journey works without manual database manipulation.
 
 ---
 
@@ -110,15 +113,15 @@ The MVP is considered functionally complete when:
 
 During the MVP phase:
 
-* [ ] 🔴 Freeze the core architecture.
-* [ ] 🔴 Do not introduce additional microservices.
-* [ ] 🔴 Do not redesign the database unnecessarily.
-* [ ] 🔴 Do not replace the existing frontend technology.
-* [ ] 🔴 Do not introduce Kubernetes.
-* [ ] 🔴 Do not build advanced notification infrastructure.
-* [ ] 🔴 Do not build enterprise IAM.
-* [ ] 🔴 Do not spend significant time polishing documentation before the MVP works.
-* [ ] 🔴 Do not add features simply because they are listed in the long-term roadmap.
+* [ ]  🔴 Freeze the core architecture.
+* [ ]  🔴 Do not introduce additional microservices.
+* [ ]  🔴 Do not redesign the database unnecessarily.
+* [ ]  🔴 Do not replace the existing frontend technology.
+* [ ]  🔴 Do not introduce Kubernetes.
+* [ ]  🔴 Do not build advanced notification infrastructure.
+* [ ]  🔴 Do not build enterprise IAM.
+* [ ]  🔴 Do not spend significant time polishing documentation before the MVP works.
+* [ ]  🔴 Do not add features simply because they are listed in the long-term roadmap.
 
 ### Rule
 
@@ -157,16 +160,17 @@ During the MVP phase:
 
 ### Architecture Tasks
 
-* [ ] 🔴 Verify Docker Compose starts all required services.
-* [ ] 🔴 Verify Auth Service starts.
-* [ ] 🔴 Verify Core Service starts.
-* [ ] 🔴 Verify PostgreSQL starts.
-* [ ] 🔴 Verify Nginx starts.
-* [ ] 🔴 Verify frontend starts.
-* [ ] 🔴 Verify Nginx routes `/api/v1/auth/*` correctly.
-* [ ] 🔴 Verify Nginx routes `/api/v1/projects/*` correctly.
-* [ ] 🔴 Verify frontend communicates through the gateway.
-* [ ] 🟠 Remove unnecessary architecture blockers.
+* [ ]  🔴 Verify Docker Compose starts all required services.
+* [ ]  🔴 Verify Auth Service starts.
+* [ ]  🔴 Verify Core Service starts.
+* [ ]  🔴 Verify PostgreSQL starts.
+* [ ]  🔴 Verify Nginx starts.
+* [ ]  🔴 Verify frontend starts.
+* [ ]  🔴 Verify Nginx routes `/api/v1/auth/*` correctly.
+* [ ]  🔴 Verify Nginx routes `/api/v1/projects/*` correctly.
+* [ ]  🔴 Verify frontend communicates through the gateway.
+* [ ]  🟠 Remove unnecessary architecture blockers.
+
 * [>] ⚪ Additional microservices.
 
 ### MVP Architecture Principle
@@ -225,12 +229,12 @@ created_at
 
 Tasks:
 
-* [ ] 🔴 Create SQLAlchemy User model.
-* [ ] 🔴 Configure unique email.
-* [ ] 🔴 Implement password hash storage.
-* [ ] 🔴 Implement role.
-* [ ] 🔴 Create database migration.
-* [ ] 🔴 Verify user creation.
+* [ ]  🔴 Create SQLAlchemy User model.
+* [ ]  🔴 Configure unique email.
+* [ ]  🔴 Implement password hash storage.
+* [ ]  🔴 Implement role.
+* [ ]  🔴 Create database migration.
+* [ ]  🔴 Verify user creation.
 
 ---
 
@@ -246,10 +250,10 @@ description
 
 Tasks:
 
-* [ ] 🔴 Create Sector model.
-* [ ] 🔴 Create migration.
-* [ ] 🔴 Seed initial sectors.
-* [ ] 🔴 Implement sector retrieval.
+* [ ]  🔴 Create Sector model.
+* [ ]  🔴 Create migration.
+* [ ]  🔴 Seed initial sectors.
+* [ ]  🔴 Implement sector retrieval.
 
 Suggested seed data:
 
@@ -283,15 +287,17 @@ updated_at
 
 Tasks:
 
-* [ ] 🔴 Create Project model.
-* [ ] 🔴 Create relationships.
-* [ ] 🔴 Create migration.
-* [ ] 🔴 Implement project creation.
-* [ ] 🔴 Implement project retrieval.
-* [ ] 🔴 Implement project listing.
+* [ ]  🔴 Create Project model.
+* [ ]  🔴 Create relationships.
+* [ ]  🔴 Create migration.
+* [ ]  🔴 Implement project creation.
+* [ ]  🔴 Implement project retrieval.
+* [ ]  🔴 Implement project listing.
+
 * [🔴] Implement project ownership.
-* [ ] 🟠 Implement project update.
-* [ ] 🟠 Implement search/filter.
+
+* [ ]  🟠 Implement project update.
+* [ ]  🟠 Implement search/filter.
 
 ---
 
@@ -311,10 +317,10 @@ created_at
 
 Tasks:
 
-* [ ] 🔴 Create StageGateHistory model.
-* [ ] 🔴 Create migration.
-* [ ] 🔴 Record every valid stage transition.
-* [ ] 🔴 Retrieve project stage history.
+* [ ]  🔴 Create StageGateHistory model.
+* [ ]  🔴 Create migration.
+* [ ]  🔴 Record every valid stage transition.
+* [ ]  🔴 Retrieve project stage history.
 
 ---
 
@@ -333,24 +339,24 @@ created_at
 
 Tasks:
 
-* [ ] 🔴 Create ContactRequest model.
-* [ ] 🔴 Create migration.
-* [ ] 🔴 Implement contact request endpoint.
-* [ ] 🔴 Associate request with project.
+* [ ]  🔴 Create ContactRequest model.
+* [ ]  🔴 Create migration.
+* [ ]  🔴 Implement contact request endpoint.
+* [ ]  🔴 Associate request with project.
 
 ---
 
 ## 6. Database & Migration Infrastructure
 
-* [ ] 🔴 Connect SQLAlchemy metadata to Alembic.
-* [ ] 🔴 Generate initial migration.
-* [ ] 🔴 Run migration against clean PostgreSQL database.
-* [ ] 🔴 Verify all five tables exist.
-* [ ] 🔴 Create seed script.
-* [ ] 🔴 Seed sectors.
-* [ ] 🟠 Seed demonstration projects.
-* [ ] 🟠 Add development/demo users.
-* [ ] 🟡 Add migration rollback verification.
+* [ ]  🔴 Connect SQLAlchemy metadata to Alembic.
+* [ ]  🔴 Generate initial migration.
+* [ ]  🔴 Run migration against clean PostgreSQL database.
+* [ ]  🔴 Verify all five tables exist.
+* [ ]  🔴 Create seed script.
+* [ ]  🔴 Seed sectors.
+* [ ]  🟠 Seed demonstration projects.
+* [ ]  🟠 Add development/demo users.
+* [ ]  🟡 Add migration rollback verification.
 
 ### Definition of Done
 
@@ -376,13 +382,13 @@ POST /api/v1/auth/register
 
 Tasks:
 
-* [ ] 🔴 Validate registration payload.
-* [ ] 🔴 Validate email.
-* [ ] 🔴 Validate password.
-* [ ] 🔴 Hash password.
-* [ ] 🔴 Save user.
-* [ ] 🔴 Reject duplicate email.
-* [ ] 🔴 Return appropriate response.
+* [ ]  🔴 Validate registration payload.
+* [ ]  🔴 Validate email.
+* [ ]  🔴 Validate password.
+* [ ]  🔴 Hash password.
+* [ ]  🔴 Save user.
+* [ ]  🔴 Reject duplicate email.
+* [ ]  🔴 Return appropriate response.
 
 ---
 
@@ -396,13 +402,13 @@ POST /api/v1/auth/login
 
 Tasks:
 
-* [ ] 🔴 Verify email.
-* [ ] 🔴 Verify password.
-* [ ] 🔴 Generate JWT.
-* [ ] 🔴 Include user ID in token.
-* [ ] 🔴 Include role in token.
-* [ ] 🔴 Reject invalid credentials.
-* [ ] 🔴 Return authentication response.
+* [ ]  🔴 Verify email.
+* [ ]  🔴 Verify password.
+* [ ]  🔴 Generate JWT.
+* [ ]  🔴 Include user ID in token.
+* [ ]  🔴 Include role in token.
+* [ ]  🔴 Reject invalid credentials.
+* [ ]  🔴 Return authentication response.
 
 ---
 
@@ -416,13 +422,13 @@ GET /api/v1/auth/me
 
 Tasks:
 
-* [ ] 🔴 Implement JWT dependency.
-* [ ] 🔴 Decode token.
-* [ ] 🔴 Validate expiration.
-* [ ] 🔴 Retrieve user.
-* [ ] 🔴 Return authenticated user.
-* [ ] 🔴 Reject missing token.
-* [ ] 🔴 Reject invalid token.
+* [ ]  🔴 Implement JWT dependency.
+* [ ]  🔴 Decode token.
+* [ ]  🔴 Validate expiration.
+* [ ]  🔴 Retrieve user.
+* [ ]  🔴 Return authenticated user.
+* [ ]  🔴 Reject missing token.
+* [ ]  🔴 Reject invalid token.
 
 ---
 
@@ -438,28 +444,28 @@ admin
 
 ### Innovator
 
-* [ ] 🔴 Register/login.
-* [ ] 🔴 Create projects.
-* [ ] 🔴 View own projects.
-* [ ] 🟠 Update own projects.
+* [ ]  🔴 Register/login.
+* [ ]  🔴 Create projects.
+* [ ]  🔴 View own projects.
+* [ ]  🟠 Update own projects.
 
 ### Official
 
-* [ ] 🔴 Login.
-* [ ] 🔴 View projects.
-* [ ] 🔴 Review projects.
-* [ ] 🔴 Advance project stage.
+* [ ]  🔴 Login.
+* [ ]  🔴 View projects.
+* [ ]  🔴 Review projects.
+* [ ]  🔴 Advance project stage.
 
 ### Admin
 
-* [ ] 🟠 Login.
-* [ ] 🟠 Full administrative access.
+* [ ]  🟠 Login.
+* [ ]  🟠 Full administrative access.
 
 ### Public
 
-* [ ] 🔴 View public projects.
-* [ ] 🔴 View project details.
-* [ ] 🔴 Submit contact requests.
+* [ ]  🔴 View public projects.
+* [ ]  🔴 View project details.
+* [ ]  🔴 Submit contact requests.
 
 ### Security Rule
 
@@ -479,12 +485,12 @@ POST /api/v1/projects
 
 Tasks:
 
-* [ ] 🔴 Require authentication.
-* [ ] 🔴 Validate project payload.
-* [ ] 🔴 Associate project with authenticated user.
-* [ ] 🔴 Validate sector.
-* [ ] 🔴 Store project.
-* [ ] 🔴 Return created project.
+* [ ]  🔴 Require authentication.
+* [ ]  🔴 Validate project payload.
+* [ ]  🔴 Associate project with authenticated user.
+* [ ]  🔴 Validate sector.
+* [ ]  🔴 Store project.
+* [ ]  🔴 Return created project.
 
 ---
 
@@ -496,11 +502,11 @@ GET /api/v1/projects
 
 Tasks:
 
-* [ ] 🔴 Return public projects.
-* [ ] 🔴 Return project summary.
-* [ ] 🟠 Filter by sector.
-* [ ] 🟠 Filter by stage.
-* [ ] 🟠 Search by title/description.
+* [ ]  🔴 Return public projects.
+* [ ]  🔴 Return project summary.
+* [ ]  🟠 Filter by sector.
+* [ ]  🟠 Filter by stage.
+* [ ]  🟠 Search by title/description.
 
 ---
 
@@ -512,10 +518,10 @@ GET /api/v1/projects/{id}
 
 Tasks:
 
-* [ ] 🔴 Retrieve project.
-* [ ] 🔴 Return project details.
-* [ ] 🔴 Return sector information.
-* [ ] 🔴 Handle project not found.
+* [ ]  🔴 Retrieve project.
+* [ ]  🔴 Return project details.
+* [ ]  🔴 Return sector information.
+* [ ]  🔴 Handle project not found.
 
 ---
 
@@ -527,9 +533,9 @@ PUT /api/v1/projects/{id}
 
 Tasks:
 
-* [ ] 🟠 Require authentication.
-* [ ] 🟠 Verify ownership or administrative role.
-* [ ] 🟠 Update allowed fields.
+* [ ]  🟠 Require authentication.
+* [ ]  🟠 Verify ownership or administrative role.
+* [ ]  🟠 Update allowed fields.
 
 ---
 
@@ -551,15 +557,15 @@ Implemented
 
 Tasks:
 
-* [ ] 🔴 Define allowed stages.
-* [ ] 🔴 Define valid forward transitions.
-* [ ] 🔴 Prevent invalid transitions.
-* [ ] 🔴 Require authorized user.
-* [ ] 🔴 Update current stage.
-* [ ] 🔴 Record StageGateHistory.
-* [ ] 🔴 Store transition notes.
-* [ ] 🔴 Return updated project.
-* [ ] 🔴 Implement stage history endpoint.
+* [ ]  🔴 Define allowed stages.
+* [ ]  🔴 Define valid forward transitions.
+* [ ]  🔴 Prevent invalid transitions.
+* [ ]  🔴 Require authorized user.
+* [ ]  🔴 Update current stage.
+* [ ]  🔴 Record StageGateHistory.
+* [ ]  🔴 Store transition notes.
+* [ ]  🔴 Return updated project.
+* [ ]  🔴 Implement stage history endpoint.
 
 Example:
 
@@ -617,11 +623,12 @@ Innovator
 
 Tasks:
 
-* [ ] 🔴 Create contact request endpoint.
-* [ ] 🔴 Validate requester information.
-* [ ] 🔴 Associate request with project.
-* [ ] 🔴 Store request.
-* [ ] 🟠 Provide authenticated innovator access to requests.
+* [ ]  🔴 Create contact request endpoint.
+* [ ]  🔴 Validate requester information.
+* [ ]  🔴 Associate request with project.
+* [ ]  🔴 Store request.
+* [ ]  🟠 Provide authenticated innovator access to requests.
+
 * [>] ⚪ Email notifications.
 
 For the hackathon, storing the request is sufficient.
@@ -650,33 +657,35 @@ The active frontend should become the actual application.
 
 Tasks:
 
-* [x] 🔴 Configure React Router.
-* [x] 🔴 Configure API client.
-* [x] 🔴 Configure authentication context.
+* [X]  🔴 Configure React Router.
+* [X]  🔴 Configure API client.
+* [X]  🔴 Configure authentication context.
+
 * [~] 🔴 Implement login.
 * [~] 🔴 Implement registration.
 * [~] 🔴 Store authentication state.
-* [ ] 🔴 Implement logout.
-* [ ] 🔴 Implement protected routes.
+
+* [X]  🔴 Implement logout.
+* [X]  🔴 Implement protected routes.
 
 ---
 
-## 13. Public Registry
+## 	
 
 The registry is one of the primary product screens.
 
 Tasks:
 
-* [ ] 🔴 Display projects from real API.
-* [ ] 🔴 Display project title.
-* [ ] 🔴 Display sector.
-* [ ] 🔴 Display stage.
-* [ ] 🔴 Display short description.
-* [ ] 🔴 Open project details.
-* [ ] 🟠 Search projects.
-* [ ] 🟠 Filter by sector.
-* [ ] 🟠 Filter by stage.
-* [ ] 🟡 Add pagination.
+* [X]  🔴 Display projects from real API.
+* [X]  🔴 Display project title.
+* [X]  🔴 Display sector.
+* [X]  🔴 Display stage.
+* [X]  🔴 Display short description.
+* [X]  🔴 Open project details.
+* [X]  🟠 Search projects.
+* [X]  🟠 Filter by sector.
+* [X]  🟠 Filter by stage.
+* [X]  🟡 Add pagination.
 
 ### Important
 
@@ -700,13 +709,13 @@ PostgreSQL
 
 Tasks:
 
-* [ ] 🔴 Display project information.
-* [ ] 🔴 Display sector.
-* [ ] 🔴 Display current stage.
-* [ ] 🔴 Display stage progress.
-* [ ] 🔴 Display project owner/organization information where appropriate.
-* [ ] 🔴 Provide contact request action.
-* [ ] 🟠 Display stage history.
+* [X]  🔴 Display project information.
+* [X]  🔴 Display sector.
+* [X]  🔴 Display current stage.
+* [X]  🔴 Display stage progress.
+* [ ]  🔴 Display project owner/organization information where appropriate.
+* [ ]  🔴 Provide contact request action.
+* [ ]  🟠 Display stage history.
 
 Suggested visual:
 
@@ -729,12 +738,12 @@ Implemented
 
 Tasks:
 
-* [ ] 🔴 Display authenticated user's projects.
-* [ ] 🔴 Display current project stages.
-* [ ] 🔴 Provide "Submit Project".
-* [ ] 🔴 Provide project details.
-* [ ] 🟠 Provide project editing.
-* [ ] 🟠 Display contact requests.
+* [ ]  🔴 Display authenticated user's projects.
+* [ ]  🔴 Display current project stages.
+* [ ]  🔴 Provide "Submit Project".
+* [ ]  🔴 Provide project details.
+* [ ]  🟠 Provide project editing.
+* [ ]  🟠 Display contact requests.
 
 ---
 
@@ -753,12 +762,12 @@ Visibility
 
 Tasks:
 
-* [ ] 🔴 Create submission form.
-* [ ] 🔴 Validate required fields.
-* [ ] 🔴 Submit to API.
-* [ ] 🔴 Display success state.
-* [ ] 🔴 Redirect to project details/dashboard.
-* [ ] 🔴 Handle API errors.
+* [ ]  🔴 Create submission form.
+* [ ]  🔴 Validate required fields.
+* [ ]  🔴 Submit to API.
+* [ ]  🔴 Display success state.
+* [ ]  🔴 Redirect to project details/dashboard.
+* [ ]  🔴 Handle API errors.
 
 ---
 
@@ -768,14 +777,14 @@ The admin/official experience only needs to support the MVP stage-gate workflow.
 
 Tasks:
 
-* [ ] 🔴 Display submitted projects.
-* [ ] 🔴 Open project.
-* [ ] 🔴 Display current stage.
-* [ ] 🔴 Select next stage.
-* [ ] 🔴 Add verification notes.
-* [ ] 🔴 Submit transition.
-* [ ] 🔴 Display updated stage.
-* [ ] 🟠 Display stage history.
+* [ ]  🔴 Display submitted projects.
+* [ ]  🔴 Open project.
+* [ ]  🔴 Display current stage.
+* [ ]  🔴 Select next stage.
+* [ ]  🔴 Add verification notes.
+* [ ]  🔴 Submit transition.
+* [ ]  🔴 Display updated stage.
+* [ ]  🟠 Display stage history.
 
 Do not build a large administrative dashboard during the MVP.
 
@@ -793,12 +802,12 @@ contains useful UX/product work.
 
 Tasks:
 
-* [ ] 🔴 Review prototype UI.
-* [ ] 🔴 Identify reusable layouts/components.
-* [ ] 🔴 Recreate required MVP screens in `frontend/`.
-* [ ] 🔴 Preserve useful SiyaPhambili branding.
-* [ ] 🔴 Do not maintain two competing production frontends.
-* [ ] [>] Treat `prototype/` as design/reference material after migration.
+* [ ]  🔴 Review prototype UI.
+* [ ]  🔴 Identify reusable layouts/components.
+* [ ]  🔴 Recreate required MVP screens in `frontend/`.
+* [ ]  🔴 Preserve useful SiyaPhambili branding.
+* [ ]  🔴 Do not maintain two competing production frontends.
+* [ ]  [>] Treat `prototype/` as design/reference material after migration.
 
 The production application remains:
 
@@ -816,13 +825,13 @@ The application must not appear empty during the demonstration.
 
 Tasks:
 
-* [ ] 🔴 Create seed script.
-* [ ] 🔴 Create sectors.
-* [ ] 🔴 Create demo users.
-* [ ] 🔴 Create demo projects.
-* [ ] 🔴 Give projects different stages.
-* [ ] 🔴 Verify projects appear in registry.
-* [ ] 🟠 Create realistic South African innovation examples.
+* [ ]  🔴 Create seed script.
+* [ ]  🔴 Create sectors.
+* [ ]  🔴 Create demo users.
+* [ ]  🔴 Create demo projects.
+* [ ]  🔴 Give projects different stages.
+* [ ]  🔴 Verify projects appear in registry.
+* [ ]  🟠 Create realistic South African innovation examples.
 
 Suggested stages:
 
@@ -845,32 +854,32 @@ We are testing the paths that can break the demo.
 
 ### Authentication
 
-* [ ] 🔴 Registration succeeds.
-* [ ] 🔴 Duplicate email rejected.
-* [ ] 🔴 Login succeeds.
-* [ ] 🔴 Incorrect password rejected.
-* [ ] 🔴 Invalid JWT rejected.
-* [ ] 🔴 Expired JWT rejected.
+* [ ]  🔴 Registration succeeds.
+* [ ]  🔴 Duplicate email rejected.
+* [ ]  🔴 Login succeeds.
+* [ ]  🔴 Incorrect password rejected.
+* [ ]  🔴 Invalid JWT rejected.
+* [ ]  🔴 Expired JWT rejected.
 
 ### Projects
 
-* [ ] 🔴 Authenticated user can create project.
-* [ ] 🔴 Public user can list projects.
-* [ ] 🔴 Public user can view project.
-* [ ] 🔴 Unauthorized user cannot modify another user's project.
+* [ ]  🔴 Authenticated user can create project.
+* [ ]  🔴 Public user can list projects.
+* [ ]  🔴 Public user can view project.
+* [ ]  🔴 Unauthorized user cannot modify another user's project.
 
 ### Stage Gates
 
-* [ ] 🔴 Valid transition succeeds.
-* [ ] 🔴 Invalid transition rejected.
-* [ ] 🔴 Unauthorized transition rejected.
-* [ ] 🔴 Stage history is created.
+* [ ]  🔴 Valid transition succeeds.
+* [ ]  🔴 Invalid transition rejected.
+* [ ]  🔴 Unauthorized transition rejected.
+* [ ]  🔴 Stage history is created.
 
 ### Contact
 
-* [ ] 🔴 Contact request succeeds.
-* [ ] 🔴 Invalid project rejected.
-* [ ] 🔴 Request is persisted.
+* [ ]  🔴 Contact request succeeds.
+* [ ]  🔴 Invalid project rejected.
+* [ ]  🔴 Request is persisted.
 
 ---
 
@@ -892,15 +901,15 @@ PostgreSQL
 
 Tasks:
 
-* [ ] 🔴 Register through frontend.
-* [ ] 🔴 Login through frontend.
-* [ ] 🔴 Create project through frontend.
-* [ ] 🔴 View project through frontend.
-* [ ] 🔴 Advance project stage.
-* [ ] 🔴 Submit contact request.
-* [ ] 🔴 Verify data exists in PostgreSQL.
-* [ ] 🔴 Restart containers.
-* [ ] 🔴 Verify data persists.
+* [ ]  🔴 Register through frontend.
+* [ ]  🔴 Login through frontend.
+* [ ]  🔴 Create project through frontend.
+* [ ]  🔴 View project through frontend.
+* [ ]  🔴 Advance project stage.
+* [ ]  🔴 Submit contact request.
+* [ ]  🔴 Verify data exists in PostgreSQL.
+* [ ]  🔴 Restart containers.
+* [ ]  🔴 Verify data persists.
 
 ---
 
@@ -908,18 +917,18 @@ Tasks:
 
 Tasks:
 
-* [ ] 🔴 Passwords are hashed.
-* [ ] 🔴 JWT secret comes from environment.
-* [ ] 🔴 `.env` is not committed.
-* [ ] 🔴 Rotate exposed development credentials if necessary.
-* [ ] 🔴 Verify authorization server-side.
-* [ ] 🔴 Validate API input.
-* [ ] 🔴 Configure CORS correctly.
-* [ ] 🔴 Keep database credentials out of source code.
-* [ ] 🔴 Verify Gitleaks.
-* [ ] 🟠 Run Bandit.
-* [ ] 🟠 Run pip-audit.
-* [ ] 🟠 Run npm audit.
+* [ ]  🔴 Passwords are hashed.
+* [ ]  🔴 JWT secret comes from environment.
+* [ ]  🔴 `.env` is not committed.
+* [ ]  🔴 Rotate exposed development credentials if necessary.
+* [ ]  🔴 Verify authorization server-side.
+* [ ]  🔴 Validate API input.
+* [ ]  🔴 Configure CORS correctly.
+* [ ]  🔴 Keep database credentials out of source code.
+* [ ]  🔴 Verify Gitleaks.
+* [ ]  🟠 Run Bandit.
+* [ ]  🟠 Run pip-audit.
+* [ ]  🟠 Run npm audit.
 
 ---
 
@@ -927,17 +936,17 @@ Tasks:
 
 Tasks:
 
-* [ ] 🔴 `docker compose up` works.
-* [ ] 🔴 PostgreSQL starts.
-* [ ] 🔴 Auth starts.
-* [ ] 🔴 Core starts.
-* [ ] 🔴 Gateway starts.
-* [ ] 🔴 Frontend starts.
-* [ ] 🔴 Services can communicate.
-* [ ] 🔴 Database migrations can run.
-* [ ] 🔴 Seed data can be loaded.
-* [ ] 🟠 Fix Makefile commands.
-* [ ] 🟠 Add convenient development commands.
+* [ ]  🔴 `docker compose up` works.
+* [ ]  🔴 PostgreSQL starts.
+* [ ]  🔴 Auth starts.
+* [ ]  🔴 Core starts.
+* [ ]  🔴 Gateway starts.
+* [ ]  🔴 Frontend starts.
+* [ ]  🔴 Services can communicate.
+* [ ]  🔴 Database migrations can run.
+* [ ]  🔴 Seed data can be loaded.
+* [ ]  🟠 Fix Makefile commands.
+* [ ]  🟠 Add convenient development commands.
 
 Useful commands should include:
 
@@ -960,11 +969,12 @@ Only the critical CI checks should block the MVP.
 
 Tasks:
 
-* [ ] 🟠 Verify GitHub Actions runs.
-* [ ] 🟠 Run backend tests.
-* [ ] 🟠 Run frontend build.
-* [ ] 🟠 Run lint.
-* [ ] 🟠 Run security checks.
+* [ ]  🟠 Verify GitHub Actions runs.
+* [ ]  🟠 Run backend tests.
+* [ ]  🟠 Run frontend build.
+* [ ]  🟠 Run lint.
+* [ ]  🟠 Run security checks.
+
 * [>] ⚪ Full production CI/CD pipeline.
 * [>] ⚪ Automated deployment pipeline.
 * [>] ⚪ Advanced release automation.
@@ -983,15 +993,15 @@ Deployment comes **after local end-to-end functionality**.
 
 Tasks:
 
-* [ ] 🔴 Verify production environment variables.
-* [ ] 🔴 Verify database configuration.
-* [ ] 🔴 Verify CORS.
-* [ ] 🔴 Verify gateway routing.
-* [ ] 🟠 Deploy backend services.
-* [ ] 🟠 Deploy frontend.
-* [ ] 🟠 Verify public URL.
-* [ ] 🟠 Verify database persistence.
-* [ ] 🟠 Run complete demo flow remotely.
+* [ ]  🔴 Verify production environment variables.
+* [ ]  🔴 Verify database configuration.
+* [ ]  🔴 Verify CORS.
+* [ ]  🔴 Verify gateway routing.
+* [ ]  🟠 Deploy backend services.
+* [ ]  🟠 Deploy frontend.
+* [ ]  🟠 Verify public URL.
+* [ ]  🟠 Verify database persistence.
+* [ ]  🟠 Run complete demo flow remotely.
 
 Do not redesign the deployment architecture during the final hours.
 
@@ -1005,38 +1015,38 @@ The final demo should be scripted.
 
 #### Step 1 — Public Registry
 
-* [ ] 🔴 Open SiyaPhambili.
-* [ ] 🔴 Show populated registry.
-* [ ] 🔴 Search/filter projects.
-* [ ] 🔴 Open a project.
+* [ ]  🔴 Open SiyaPhambili.
+* [ ]  🔴 Show populated registry.
+* [ ]  🔴 Search/filter projects.
+* [ ]  🔴 Open a project.
 
 #### Step 2 — Innovator
 
-* [ ] 🔴 Register/login.
-* [ ] 🔴 Open dashboard.
-* [ ] 🔴 Submit project.
-* [ ] 🔴 Show project appearing in registry.
+* [ ]  🔴 Register/login.
+* [ ]  🔴 Open dashboard.
+* [ ]  🔴 Submit project.
+* [ ]  🔴 Show project appearing in registry.
 
 #### Step 3 — Official
 
-* [ ] 🔴 Login as official.
-* [ ] 🔴 Open project.
-* [ ] 🔴 Review project.
-* [ ] 🔴 Move project from Idea → Prototype.
-* [ ] 🔴 Show stage history.
+* [ ]  🔴 Login as official.
+* [ ]  🔴 Open project.
+* [ ]  🔴 Review project.
+* [ ]  🔴 Move project from Idea → Prototype.
+* [ ]  🔴 Show stage history.
 
 #### Step 4 — Contact
 
-* [ ] 🔴 Submit contact request.
-* [ ] 🔴 Demonstrate that the request is associated with the project.
+* [ ]  🔴 Submit contact request.
+* [ ]  🔴 Demonstrate that the request is associated with the project.
 
 #### Step 5 — Architecture
 
-* [ ] 🟠 Show architecture diagram.
-* [ ] 🟠 Explain microservices.
-* [ ] 🟠 Explain PostgreSQL.
-* [ ] 🟠 Explain stage-gate workflow.
-* [ ] 🟠 Explain security/privacy approach.
+* [ ]  🟠 Show architecture diagram.
+* [ ]  🟠 Explain microservices.
+* [ ]  🟠 Explain PostgreSQL.
+* [ ]  🟠 Explain stage-gate workflow.
+* [ ]  🟠 Explain security/privacy approach.
 
 ---
 
@@ -1044,8 +1054,9 @@ The final demo should be scripted.
 
 Assuming approximately 40 hours remain:
 
+
 | Phase                   |       Target |
-| ----------------------- | -----------: |
+| ------------------------- | -------------: |
 | Scope freeze            |       1 hour |
 | Database                |      5 hours |
 | Authentication          |      5 hours |
@@ -1078,13 +1089,13 @@ If the team falls behind, remove features in this order.
 
 ### Do NOT cut
 
-* [ ] 🔴 Authentication
-* [ ] 🔴 Project creation
-* [ ] 🔴 Project registry
-* [ ] 🔴 Project details
-* [ ] 🔴 Stage gates
-* [ ] 🔴 PostgreSQL persistence
-* [ ] 🔴 Frontend/API integration
+* [ ]  🔴 Authentication
+* [ ]  🔴 Project creation
+* [ ]  🔴 Project registry
+* [ ]  🔴 Project details
+* [ ]  🔴 Stage gates
+* [ ]  🔴 PostgreSQL persistence
+* [ ]  🔴 Frontend/API integration
 
 The principle is:
 
@@ -1200,12 +1211,12 @@ v0.1.0-mvp
 
 Tasks:
 
-* [ ] 🟠 Confirm MVP acceptance criteria.
-* [ ] 🟠 Freeze MVP branch.
-* [ ] 🟠 Run final tests.
-* [ ] 🟠 Verify deployment.
-* [ ] 🟠 Tag release.
-* [ ] 🟠 Create release notes.
+* [ ]  🟠 Confirm MVP acceptance criteria.
+* [ ]  🟠 Freeze MVP branch.
+* [ ]  🟠 Run final tests.
+* [ ]  🟠 Verify deployment.
+* [ ]  🟠 Tag release.
+* [ ]  🟠 Create release notes.
 
 Future releases:
 
