@@ -8,6 +8,7 @@ import Registry from './pages/Registry';
 import ProjectDetails from './pages/ProjectDetails';
 import NewProject from './pages/NewProject';
 import Dashboard from './pages/Dashboard';
+import Partners from './pages/Partners';
 
 export default function App() {
   return (
@@ -35,6 +36,7 @@ export default function App() {
             <Route path="/projects/:id" element={<ProjectDetails />} />
             <Route path="/projects/new" element={<NewProject />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/partners" element={<Partners />} />
             
             <Route path="*" element={<h2 className="text-2xl font-bold text-white">404 - Page Not Found</h2>} />
           </Routes>

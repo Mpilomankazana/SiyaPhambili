@@ -13,8 +13,15 @@ export default function Login() {
     e.preventDefault();
     setError('');
     try {
-      await login(email, password);
-      navigate('/dashboard');
+      const user = await login(email, password);
+
+      if (user.role === 'innovator') {
+        navigate('/dashboard');
+      } else if (user.role === 'official' || user.role === 'super_admin') {
+        navigate('/partners');
+      } else {
+        setError('This account does not have access to a workspace.');
+      }
     } catch {
       setError('Login failed. Please check your credentials.');
     }
